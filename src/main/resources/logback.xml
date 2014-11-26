@@ -1,0 +1,25 @@
+<configuration debug="true" scan="true">
+
+    <variable name="LOGS_FOLDER" value="${HOME:-.}/logs"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg %ex%n</pattern>
+		</encoder>
+    </appender>
+
+    <appender name="log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_FOLDER}/ec2-start-stop-tools.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_FOLDER}/ec2-start-stop-tools.%d{yyyyMMdd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %m %throwable%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+		<appender-ref ref="console"/>
+		<appender-ref ref="log-file"/>
+    </root>
+</configuration>
