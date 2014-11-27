@@ -10,7 +10,10 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.DescribeInstanceStatusRequest;
+import com.amazonaws.services.ec2.model.DescribeInstanceStatusResult;
 import com.amazonaws.services.ec2.model.InstanceStateChange;
+import com.amazonaws.services.ec2.model.InstanceStatus;
 import com.amazonaws.services.ec2.model.StartInstancesRequest;
 import com.amazonaws.services.ec2.model.StartInstancesResult;
 import com.amazonaws.services.ec2.model.StopInstancesRequest;
@@ -24,6 +27,10 @@ import com.amazonaws.services.ec2.model.StopInstancesResult;
 public class AmazonEC2Service {
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger( AmazonEC2Service.class );
+
+	private static final String EC2_INSTANCE_STATE_STOPPED = "stopped";
+
+	private static final String EC2_INSTANCE_STATE_RUNNING = "running";
 
 	/**
 	 * Amazon main service
@@ -63,6 +70,16 @@ public class AmazonEC2Service {
 
 	public void startInstance( final String instanceId ) {
 
+		log.info( "Starting instance {}", instanceId );
+
+		final String instanteState = getInstanceStatus( instanceId );
+		if( ! EC2_INSTANCE_STATE_STOPPED.equals( instanteState ) ) {
+
+			final String message = "Instance " + instanceId + " is not stopped, current state: " + instanteState;
+			log.error( message );
+			throw new AmazonClientException( message );
+		}
+
 		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest().withInstanceIds( instanceId );
 		final StartInstancesResult startInstancesResult = ec2.startInstances( startInstancesRequest );
 		final List<InstanceStateChange> instanceStateChangeList = startInstancesResult.getStartingInstances();
@@ -71,9 +88,21 @@ public class AmazonEC2Service {
 
 			log.info( "Instance {} has changing state: {} -> {}", instanceStateChange.getInstanceId(), instanceStateChange.getPreviousState(), instanceStateChange.getCurrentState() );
 		}
+
+		log.info( "Instance {} is starting", instanceId );
 	}
 
 	public void stopInstance( final String instanceId ) {
+
+		log.info( "Stoping instance {}", instanceId );
+
+		final String instanteState = getInstanceStatus( instanceId );
+		if( ! EC2_INSTANCE_STATE_RUNNING.equals( instanteState ) ) {
+
+			final String message = "Instance " + instanceId + " is not running, current status: " + instanteState;
+			log.error( message );
+			throw new AmazonClientException( message );
+		}
 
 		final StopInstancesRequest stopInstancesRequest = new StopInstancesRequest().withInstanceIds( instanceId );
 		final StopInstancesResult stopInstancesResult = ec2.stopInstances( stopInstancesRequest );
@@ -83,5 +112,35 @@ public class AmazonEC2Service {
 
 			log.info( "Instance {} has changing state: {} -> {}", instanceStateChange.getInstanceId(), instanceStateChange.getPreviousState(), instanceStateChange.getCurrentState() );
 		}
+
+		log.info( "Instance {} is stoping", instanceId );
+	}
+
+	/**
+	 * Method to return a current instance status
+	 *
+	 * @param instanceId id of the instance
+	 * @return instance status
+	 */
+	private String getInstanceStatus( final String instanceId ) {
+
+		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds( instanceId );
+		final DescribeInstanceStatusResult describeInstanceStatusResult = ec2.describeInstanceStatus( describeInstanceStatusRequest );
+		final List<InstanceStatus> instanceStatusList = describeInstanceStatusResult.getInstanceStatuses();
+
+		//If none or more than one instances is found
+		if( instanceStatusList.isEmpty() ) {
+
+			throw new AmazonClientException( "No instance found with id:" + instanceId );
+		}
+		else if( instanceStatusList.size() > 1 ) {
+
+			throw new AmazonClientException( "Multiple instances found with id:" + instanceId );
+		}
+
+		//Return the current state
+		final String instanceState = instanceStatusList.get( 0 ).getInstanceState().getName();
+		log.info( "Instance {} current state is {}", instanceId, instanceState );
+		return instanceState;
 	}
 }
