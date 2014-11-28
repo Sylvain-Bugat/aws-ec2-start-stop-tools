@@ -14,7 +14,7 @@ public class Configuration {
 
 	public static final String CONFIGURATION_FILE_NAME ="ec2tools.ini";
 
-	private final Map<String,List<InstanceOrder>> configuredSections = new HashMap<>();
+	private final Map<String,List<InstanceOrder>> configuredSections = new HashMap<String, List<InstanceOrder>>();
 
 	public Configuration() throws ConfigurationException {
 
@@ -23,7 +23,7 @@ public class Configuration {
 		//Sections loading
 		for( final String section : hierarchicalINIConfiguration.getSections() ) {
 
-			final List<InstanceOrder> sectionList = new ArrayList<>();
+			final List<InstanceOrder> sectionList = new ArrayList<InstanceOrder>();
 			configuredSections.put( section, sectionList );
 
 			final SubnodeConfiguration subnodeConfiguration = hierarchicalINIConfiguration.getSection( section );
