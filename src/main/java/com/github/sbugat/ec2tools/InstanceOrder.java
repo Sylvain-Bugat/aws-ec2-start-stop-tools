@@ -1,5 +1,10 @@
 package com.github.sbugat.ec2tools;
 
+/**
+ * Loaded instance order
+ *
+ * @author Sylvain Bugat
+ */
 public class InstanceOrder {
 
 	public final String instanceId;
@@ -10,5 +15,9 @@ public class InstanceOrder {
 
 		instanceId = instanceIdArg;
 		orderType = OrderType.valueOf( orderTypeArg );
+	}
+
+	public String toString() {
+		return instanceId + ':' + orderType;
 	}
 }

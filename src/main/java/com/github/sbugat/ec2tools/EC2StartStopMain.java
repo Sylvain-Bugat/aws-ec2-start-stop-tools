@@ -16,6 +16,9 @@ import com.github.sbugat.ec2tools.service.AmazonEC2Service;
  */
 public class EC2StartStopMain {
 
+	/**
+	 * SLF4J XLogger
+	 */
 	private static final XLogger log = XLoggerFactory.getXLogger( EC2StartStopMain.class );
 
 	public static void main( final String args[] ) {

@@ -23,12 +23,15 @@ import com.amazonaws.services.ec2.model.StopInstancesRequest;
 import com.amazonaws.services.ec2.model.StopInstancesResult;
 
 /**
- * Amazon EC2 simple service, init credentials with file $HOME/.aws/credentials
+ * Amazon EC2 simple service, init credentials with default file $HOME/.aws/credentials
  *
  * @author Sylvain Bugat
  */
 public class AmazonEC2Service {
 
+	/**
+	 * SLF4J XLogger
+	 */
 	private static final XLogger log = XLoggerFactory.getXLogger( AmazonEC2Service.class );
 
 	private static final String EC2_INSTANCE_STATE_STOPPED = "stopped";
@@ -36,7 +39,7 @@ public class AmazonEC2Service {
 	private static final String EC2_INSTANCE_STATE_RUNNING = "running";
 
 	/**
-	 * Amazon main service
+	 * Amazon EC2 service access
 	 */
 	private final AmazonEC2 ec2;
 
@@ -100,6 +103,7 @@ public class AmazonEC2Service {
 		}
 
 		log.info( "Instance {} is starting", instanceId );
+		log.exit();
 	}
 
 	public void stopInstance( final String instanceId ) {
@@ -161,5 +165,9 @@ public class AmazonEC2Service {
 		log.info( "Instance {} current state is {}", instanceId, instanceState );
 		log.exit( instanceState );
 		return instanceState;
+	}
+
+	public String toString() {
+		return AmazonEC2Service.class.getSimpleName() + ':' + ec2.toString();
 	}
 }
