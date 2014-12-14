@@ -2,6 +2,9 @@ package com.github.sbugat.ec2tools.service;
 
 import java.util.List;
 
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
@@ -26,7 +29,7 @@ import com.amazonaws.services.ec2.model.StopInstancesResult;
  */
 public class AmazonEC2Service {
 
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger( AmazonEC2Service.class );
+	private static final XLogger log = XLoggerFactory.getXLogger( AmazonEC2Service.class );
 
 	private static final String EC2_INSTANCE_STATE_STOPPED = "stopped";
 
@@ -44,6 +47,7 @@ public class AmazonEC2Service {
 	 */
 	public AmazonEC2Service() throws AmazonClientException{
 
+		log.entry();
 		log.info( "Loading AWS configuration" );
 
 		//Get AWS credentials in the .aws/credentials directory by default
@@ -52,7 +56,10 @@ public class AmazonEC2Service {
 			aWScredentials = new ProfileCredentialsProvider().getCredentials();
 		}
 		catch ( final Exception e) {
-			throw new AmazonClientException( "Error loading AWS credentials check file exitence and access $HOME/.aws/credentials on Linux", e );
+
+			final AmazonClientException exception = new AmazonClientException( "Error loading AWS credentials check file exitence and access $HOME/.aws/credentials on Linux", e );
+			log.exit( exception );
+			throw exception;
 		}
 
 		//Client configuration
@@ -70,6 +77,7 @@ public class AmazonEC2Service {
 
 	public void startInstance( final String instanceId ) {
 
+		log.entry();
 		log.info( "Starting instance {}", instanceId );
 
 		final String instanteState = getInstanceStatus( instanceId );
@@ -77,7 +85,9 @@ public class AmazonEC2Service {
 
 			final String message = "Instance " + instanceId + " is not stopped, current state: " + instanteState;
 			log.error( message );
-			throw new AmazonClientException( message );
+			final AmazonClientException exception = new AmazonClientException( message );
+			log.exit( exception );
+			throw exception;
 		}
 
 		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest().withInstanceIds( instanceId );
@@ -94,6 +104,7 @@ public class AmazonEC2Service {
 
 	public void stopInstance( final String instanceId ) {
 
+		log.entry();
 		log.info( "Stoping instance {}", instanceId );
 
 		final String instanteState = getInstanceStatus( instanceId );
@@ -101,6 +112,7 @@ public class AmazonEC2Service {
 
 			final String message = "Instance " + instanceId + " is not running, current status: " + instanteState;
 			log.error( message );
+			log.exit( message );
 			throw new AmazonClientException( message );
 		}
 
@@ -114,6 +126,7 @@ public class AmazonEC2Service {
 		}
 
 		log.info( "Instance {} is stoping", instanceId );
+		log.exit();
 	}
 
 	/**
@@ -124,6 +137,7 @@ public class AmazonEC2Service {
 	 */
 	private String getInstanceStatus( final String instanceId ) {
 
+		log.entry();
 		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds( instanceId );
 		final DescribeInstanceStatusResult describeInstanceStatusResult = ec2.describeInstanceStatus( describeInstanceStatusRequest );
 		final List<InstanceStatus> instanceStatusList = describeInstanceStatusResult.getInstanceStatuses();
@@ -131,16 +145,21 @@ public class AmazonEC2Service {
 		//If none or more than one instances is found
 		if( instanceStatusList.isEmpty() ) {
 
-			throw new AmazonClientException( "No instance found with id:" + instanceId );
+			final AmazonClientException exception = new AmazonClientException( "No instance found with id:" + instanceId );
+			log.exit( exception );
+			throw exception;
 		}
 		else if( instanceStatusList.size() > 1 ) {
 
-			throw new AmazonClientException( "Multiple instances found with id:" + instanceId );
+			final AmazonClientException exception = new AmazonClientException( "Multiple instances found with id:" + instanceId );
+			log.exit( exception );
+			throw exception;
 		}
 
 		//Return the current state
 		final String instanceState = instanceStatusList.get( 0 ).getInstanceState().getName();
 		log.info( "Instance {} current state is {}", instanceId, instanceState );
+		log.exit( instanceState );
 		return instanceState;
 	}
 }

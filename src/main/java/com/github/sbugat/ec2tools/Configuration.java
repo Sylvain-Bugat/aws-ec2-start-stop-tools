@@ -9,14 +9,20 @@ import java.util.Map;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
 import org.apache.commons.configuration.SubnodeConfiguration;
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
 
 public class Configuration {
+
+	private static final XLogger log = XLoggerFactory.getXLogger( Configuration.class );
 
 	public static final String CONFIGURATION_FILE_NAME ="ec2tools.ini";
 
 	private final Map<String,List<InstanceOrder>> configuredSections = new HashMap<String, List<InstanceOrder>>();
 
 	public Configuration() throws ConfigurationException {
+
+		log.entry();
 
 		final HierarchicalINIConfiguration hierarchicalINIConfiguration = new HierarchicalINIConfiguration( CONFIGURATION_FILE_NAME );
 
@@ -35,6 +41,8 @@ public class Configuration {
 				sectionList.add( new InstanceOrder( instanceId, subnodeConfiguration.getString( instanceId ) ) );
 			}
 		}
+
+		log.exit();
 	}
 
 	public List<InstanceOrder> getSectionOrders( final String section ){
