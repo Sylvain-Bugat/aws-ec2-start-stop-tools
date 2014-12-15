@@ -23,7 +23,7 @@
 		<maven.compiler.target>1.6</maven.compiler.target>
 
 		<!--  Log Frameworks Version  -->
-		<slf4j.version>1.7.7</slf4j.version>
+		<slf4j.version>1.7.8</slf4j.version>
 		<logback.version>1.1.2</logback.version>
 
 		<!-- AWS version properties-->
