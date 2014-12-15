@@ -73,16 +73,22 @@ public class AmazonEC2Service {
 		ec2.setRegion( Region.getRegion( Regions.EU_WEST_1 ) );
 
 		//Simple connection test
-		log.info( "AWS configurtion load, now doing connection test..." );
+		log.info( "AWS configuration loaded, now doing connection test..." );
 		ec2.describeAvailabilityZones();
 		log.info( "Connection with AWS OK" );
 	}
 
+	/**
+	 * Check the instance status and order to start it if it's stopped
+	 *
+	 * @param instanceId Instance du start
+	 */
 	public void startInstance( final String instanceId ) {
 
 		log.entry();
 		log.info( "Starting instance {}", instanceId );
 
+		//Check the instance state
 		final String instanteState = getInstanceStatus( instanceId );
 		if( ! EC2_INSTANCE_STATE_STOPPED.equals( instanteState ) ) {
 
@@ -93,6 +99,7 @@ public class AmazonEC2Service {
 			throw exception;
 		}
 
+		//Start instance order
 		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest().withInstanceIds( instanceId );
 		final StartInstancesResult startInstancesResult = ec2.startInstances( startInstancesRequest );
 		final List<InstanceStateChange> instanceStateChangeList = startInstancesResult.getStartingInstances();
@@ -106,11 +113,17 @@ public class AmazonEC2Service {
 		log.exit();
 	}
 
+	/**
+	 * Check the instance status and order to stop it if it's running
+	 *
+	 * @param instanceId instance to stop
+	 */
 	public void stopInstance( final String instanceId ) {
 
 		log.entry();
 		log.info( "Stoping instance {}", instanceId );
 
+		//Check the instance state
 		final String instanteState = getInstanceStatus( instanceId );
 		if( ! EC2_INSTANCE_STATE_RUNNING.equals( instanteState ) ) {
 
@@ -120,6 +133,7 @@ public class AmazonEC2Service {
 			throw new AmazonClientException( message );
 		}
 
+		//Stop instance order
 		final StopInstancesRequest stopInstancesRequest = new StopInstancesRequest().withInstanceIds( instanceId );
 		final StopInstancesResult stopInstancesResult = ec2.stopInstances( stopInstancesRequest );
 		final List<InstanceStateChange> instanceStateChangeList = stopInstancesResult.getStoppingInstances();
