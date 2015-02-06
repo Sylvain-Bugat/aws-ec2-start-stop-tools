@@ -29,6 +29,9 @@
 		<!-- AWS version properties-->
 		<amazon.aws.version>1.9.17</amazon.aws.version>
 
+		<!-- Java GNU port of getopt-->
+		<gnu.getopt.version>1.0.13</gnu.getopt.version>
+
 		<!-- Apache commons -->
 		<commons.configuration.version>1.10</commons.configuration.version>
 
@@ -57,6 +60,13 @@
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-ec2</artifactId>
 			<version>${amazon.aws.version}</version>
+		</dependency>
+
+		<!-- GNU getopt -->
+		<dependency>
+			<groupId>gnu.getopt</groupId>
+			<artifactId>java-getopt</artifactId>
+			<version>${gnu.getopt.version}</version>
 		</dependency>
 
 		<!-- Apache commons -->
