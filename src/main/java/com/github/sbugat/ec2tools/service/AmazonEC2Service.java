@@ -150,7 +150,7 @@ public class AmazonEC2Service {
 	 * @param instanceId id of the instance
 	 * @return instance status
 	 */
-	private String getInstanceStatus(final String instanceId) {
+	public String getInstanceStatus(final String instanceId) {
 
 		log.entry();
 		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(instanceId);
