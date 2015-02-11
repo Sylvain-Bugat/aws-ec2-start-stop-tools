@@ -20,7 +20,7 @@ instanceId1=STOP
 
 just launch the jar with one or more section arguments:
 ```bash
-java -jar start-stop-ec2-tools-1.0-SNAPSHOT-jar-with-dependencies.jar SECTION1 SECTION2
+java -jar start-stop-ec2-tools-1.0-SNAPSHOT-jar-with-dependencies.jar -s SECTION1 -s SECTION2
 ```
 
 ## Compile and build
