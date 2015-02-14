@@ -22,12 +22,16 @@
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 
-		<!--  Log Frameworks Version  -->
+		<!-- Log Frameworks Version -->
 		<slf4j.version>1.7.10</slf4j.version>
 		<logback.version>1.1.2</logback.version>
 
-		<!-- AWS version properties-->
+		<!-- AWS version -->
 		<amazon.aws.version>1.9.19</amazon.aws.version>
+
+		<!-- Dependencies injection versions -->
+		<javax.inject.version>1</javax.inject.version>
+		<google.guice.version>3.0</google.guice.version>
 
 		<!-- Java GNU port of getopt-->
 		<gnu.getopt.version>1.0.13</gnu.getopt.version>
@@ -64,6 +68,19 @@
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-ec2</artifactId>
 			<version>${amazon.aws.version}</version>
+		</dependency>
+
+		<!-- Dependencies injection API -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>${javax.inject.version}</version>
+		</dependency>
+		<!-- Guice dependencies injection -->
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>${google.guice.version}</version>
 		</dependency>
 
 		<!-- GNU getopt -->
