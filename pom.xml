@@ -27,7 +27,7 @@
 		<logback.version>1.1.2</logback.version>
 
 		<!-- AWS version properties-->
-		<amazon.aws.version>1.9.18</amazon.aws.version>
+		<amazon.aws.version>1.9.19</amazon.aws.version>
 
 		<!-- Java GNU port of getopt-->
 		<gnu.getopt.version>1.0.13</gnu.getopt.version>
