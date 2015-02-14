@@ -57,7 +57,7 @@ public class AmazonEC2Service {
 		}
 		catch (final Exception e) {
 
-			final AmazonClientException exception = new AmazonClientException("Error loading AWS credentials check file exitence and access $HOME/.aws/credentials on Linux", e);
+			final AmazonClientException exception = new AmazonClientException("Error loading AWS credentials check file existence and access $HOME/.aws/credentials on Linux", e);
 			log.exit(exception);
 			throw exception;
 		}
