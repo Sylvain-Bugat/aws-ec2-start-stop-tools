@@ -12,6 +12,10 @@ import org.slf4j.ext.XLoggerFactory;
 import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.github.sbugat.ec2tools.configuration.Configuration;
 import com.github.sbugat.ec2tools.service.AmazonEC2Service;
+import com.github.sbugat.ec2tools.service.ServiceModule;
+import com.github.sbugat.ec2tools.service.StartStopService;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * Main class of start-stop EC2 tools.
@@ -26,10 +30,16 @@ public class EC2StartStopMain {
 	 */
 	private static final XLogger log = XLoggerFactory.getXLogger(EC2StartStopMain.class);
 
-	public static void main(final String args[]) {
+	public static void main(final String args[]) throws ConfigurationException {
 
 		log.entry((Object[]) args);
 		log.info("Start of EC2StartStop tools");
+
+		final Injector injector = Guice.createInjector(new ServiceModule());
+		final StartStopService startStopService = injector.getInstance(StartStopService.class);
+		startStopService.loadConfiguration();
+
+		System.exit(0);
 
 		final String usage = "Usage: " + EC2StartStopMain.class.getSimpleName() + " [-l] [-c|-p -s <section1> -s <section2> ... ]";
 
