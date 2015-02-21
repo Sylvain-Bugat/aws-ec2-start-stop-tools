@@ -2,16 +2,14 @@ package com.github.sbugat.ec2tools.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
 import com.amazonaws.AmazonClientException;
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstanceStatusRequest;
 import com.amazonaws.services.ec2.model.DescribeInstanceStatusResult;
@@ -30,49 +28,32 @@ import com.amazonaws.services.ec2.model.StopInstancesResult;
  */
 public class AmazonEC2Service {
 
-	/**
-	 * SLF4J XLogger
-	 */
+	/*** SLF4J XLogger. */
 	private static final XLogger log = XLoggerFactory.getXLogger(AmazonEC2Service.class);
 
-	/**
-	 * Amazon EC2 service access
-	 */
-	private final AmazonEC2 ec2;
+	/** Amazon EC2 service access. */
+	@Inject
+	private AmazonEC2Client amazonEC2Client;
 
 	/**
-	 * Amazon EC2 service initialization
+	 * Amazon EC2 service initialization.
 	 * 
 	 * @throws AmazonClientException
 	 */
-	public AmazonEC2Service() throws AmazonClientException {
+	public void initialize() throws AmazonClientException {
 
 		log.entry();
-		log.info("Loading AWS configuration");
-
-		// Get AWS credentials in the .aws/credentials directory by default
-		final AWSCredentials aWScredentials;
-		try {
-			aWScredentials = new ProfileCredentialsProvider().getCredentials();
-		}
-		catch (final Exception e) {
-
-			final AmazonClientException exception = new AmazonClientException("Error loading AWS credentials check file existence and access $HOME/.aws/credentials on Linux", e);
-			log.exit(exception);
-			throw exception;
-		}
-
-		// Client configuration
-		final ClientConfiguration clientConfiguration = new ClientConfiguration();
+		log.info("Initialize ECS AWS client");
 
 		// AWS client initialization
-		ec2 = new AmazonEC2Client(aWScredentials, clientConfiguration);
-		ec2.setRegion(Region.getRegion(Regions.EU_WEST_1));
+		// TODO region customization
+		amazonEC2Client.setRegion(Region.getRegion(Regions.EU_WEST_1));
 
 		// Simple connection test
 		log.info("AWS configuration loaded, now doing connection test...");
-		ec2.describeAvailabilityZones();
+		amazonEC2Client.describeAvailabilityZones();
 		log.info("Connection with AWS OK");
+		log.exit();
 	}
 
 	/**
@@ -86,8 +67,8 @@ public class AmazonEC2Service {
 		log.info("Starting instance {}", instanceId);
 
 		// Check the instance state
-		final String instanteState = getInstanceStatus(instanceId);
-		if (!InstanceStateName.Stopped.toString().equals(instanteState)) {
+		final InstanceStateName instanteState = getInstanceStatus(instanceId);
+		if (InstanceStateName.Stopped != instanteState) {
 
 			final String message = "Instance " + instanceId + " is not stopped, current state: " + instanteState;
 			log.error(message);
@@ -98,7 +79,7 @@ public class AmazonEC2Service {
 
 		// Start instance order
 		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest().withInstanceIds(instanceId);
-		final StartInstancesResult startInstancesResult = ec2.startInstances(startInstancesRequest);
+		final StartInstancesResult startInstancesResult = amazonEC2Client.startInstances(startInstancesRequest);
 		final List<InstanceStateChange> instanceStateChangeList = startInstancesResult.getStartingInstances();
 
 		for (final InstanceStateChange instanceStateChange : instanceStateChangeList) {
@@ -121,8 +102,8 @@ public class AmazonEC2Service {
 		log.info("Stoping instance {}", instanceId);
 
 		// Check the instance state
-		final String instanteState = getInstanceStatus(instanceId);
-		if (!InstanceStateName.Running.toString().equals(instanteState)) {
+		final InstanceStateName instanteState = getInstanceStatus(instanceId);
+		if (InstanceStateName.Running != instanteState) {
 
 			final String message = "Instance " + instanceId + " is not running, current status: " + instanteState;
 			log.error(message);
@@ -132,7 +113,7 @@ public class AmazonEC2Service {
 
 		// Stop instance order
 		final StopInstancesRequest stopInstancesRequest = new StopInstancesRequest().withInstanceIds(instanceId);
-		final StopInstancesResult stopInstancesResult = ec2.stopInstances(stopInstancesRequest);
+		final StopInstancesResult stopInstancesResult = amazonEC2Client.stopInstances(stopInstancesRequest);
 		final List<InstanceStateChange> instanceStateChangeList = stopInstancesResult.getStoppingInstances();
 
 		for (final InstanceStateChange instanceStateChange : instanceStateChangeList) {
@@ -150,11 +131,11 @@ public class AmazonEC2Service {
 	 * @param instanceId id of the instance
 	 * @return instance status
 	 */
-	public String getInstanceStatus(final String instanceId) {
+	public InstanceStateName getInstanceStatus(final String instanceId) {
 
 		log.entry();
 		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(instanceId);
-		final DescribeInstanceStatusResult describeInstanceStatusResult = ec2.describeInstanceStatus(describeInstanceStatusRequest);
+		final DescribeInstanceStatusResult describeInstanceStatusResult = amazonEC2Client.describeInstanceStatus(describeInstanceStatusRequest);
 		final List<InstanceStatus> instanceStatusList = describeInstanceStatusResult.getInstanceStatuses();
 
 		// If none or more than one instances is found
@@ -172,7 +153,7 @@ public class AmazonEC2Service {
 		}
 
 		// Return the current state
-		final String instanceState = instanceStatusList.get(0).getInstanceState().getName();
+		final InstanceStateName instanceState = InstanceStateName.valueOf(instanceStatusList.get(0).getInstanceState().getName());
 		log.info("Instance {} current state is {}", instanceId, instanceState);
 		log.exit(instanceState);
 		return instanceState;
@@ -180,6 +161,6 @@ public class AmazonEC2Service {
 
 	@Override
 	public String toString() {
-		return AmazonEC2Service.class.getSimpleName() + ':' + ec2.toString();
+		return AmazonEC2Service.class.getSimpleName() + ':' + amazonEC2Client.toString();
 	}
 }
