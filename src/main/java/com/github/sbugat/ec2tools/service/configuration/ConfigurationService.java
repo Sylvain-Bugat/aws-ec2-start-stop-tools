@@ -70,7 +70,12 @@ public class ConfigurationService {
 		log.exit();
 	}
 
-	public List<InstanceOrder> getSectionOrders(final String section) {
+	public Map<String, List<InstanceOrder>> getConfiguredSections() {
+
+		return configuredSections;
+	}
+
+	public List<InstanceOrder> getConfiguredSections(final String section) {
 
 		return configuredSections.get(section);
 	}
