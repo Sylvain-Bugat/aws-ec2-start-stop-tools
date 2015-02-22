@@ -12,7 +12,6 @@ import org.slf4j.ext.XLoggerFactory;
 import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.github.sbugat.ec2tools.configuration.Configuration;
 import com.github.sbugat.ec2tools.service.AmazonEC2Service;
-import com.github.sbugat.ec2tools.service.ServiceModule;
 import com.github.sbugat.ec2tools.service.StartStopService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -35,7 +34,7 @@ public class EC2StartStopMain {
 		log.entry((Object[]) args);
 		log.info("Start of EC2StartStop tools");
 
-		final Injector injector = Guice.createInjector(new ServiceModule());
+		final Injector injector = Guice.createInjector();
 		final StartStopService startStopService = injector.getInstance(StartStopService.class);
 		startStopService.loadConfiguration();
 
@@ -231,8 +230,8 @@ public class EC2StartStopMain {
 		if (OrderType.START == instanceOrder.orderType) {
 
 			try {
-				final String status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
-				if (InstanceStateName.Stopped.toString().equals(status)) {
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				if (InstanceStateName.Stopped == status) {
 					log.info("Instance {} is stopped and can be started", instanceOrder.instanceId);
 				}
 				else {
@@ -252,8 +251,8 @@ public class EC2StartStopMain {
 		else if (OrderType.STOP == instanceOrder.orderType) {
 
 			try {
-				final String status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
-				if (InstanceStateName.Running.toString().equals(status)) {
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				if (InstanceStateName.Running == status) {
 					log.info("Instance {} is running and can be stopped", instanceOrder.instanceId);
 				}
 				else {
@@ -288,8 +287,8 @@ public class EC2StartStopMain {
 		if (OrderType.START == instanceOrder.orderType) {
 
 			try {
-				final String status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
-				if (InstanceStateName.Running.toString().equals(status)) {
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				if (InstanceStateName.Running == status) {
 					log.info("Instance {} is running", instanceOrder.instanceId);
 				}
 				else {
@@ -309,8 +308,8 @@ public class EC2StartStopMain {
 		else if (OrderType.STOP == instanceOrder.orderType) {
 
 			try {
-				final String status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
-				if (InstanceStateName.Stopped.toString().equals(status)) {
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				if (InstanceStateName.Stopped == status) {
 					log.info("Instance {} is stopped", instanceOrder.instanceId);
 				}
 				else {
