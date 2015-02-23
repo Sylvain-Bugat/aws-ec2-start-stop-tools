@@ -12,6 +12,8 @@ import com.google.common.collect.ImmutableList;
  */
 public class ProgramOptions {
 
+	private final boolean executionOption;
+
 	private final boolean listOption;
 
 	private final boolean checkOption;
@@ -20,12 +22,17 @@ public class ProgramOptions {
 
 	private final List<String> sectionOptions;
 
-	public ProgramOptions(final boolean listOptionArg, final boolean checkOptionArg, final boolean postCheckOptionArg, final List<String> sectionOptionsArg) {
+	public ProgramOptions(final boolean executionOptionArg, final boolean listOptionArg, final boolean checkOptionArg, final boolean postCheckOptionArg, final List<String> sectionOptionsArg) {
+		executionOption = executionOptionArg;
 		listOption = listOptionArg;
 		checkOption = checkOptionArg;
 		postCheckOption = postCheckOptionArg;
 
 		sectionOptions = ImmutableList.copyOf(sectionOptionsArg);
+	}
+
+	public boolean hasExecutionOption() {
+		return executionOption;
 	}
 
 	public boolean hasListOption() {
