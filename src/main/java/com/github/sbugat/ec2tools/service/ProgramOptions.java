@@ -43,4 +43,8 @@ public class ProgramOptions {
 	public List<String> getSectionOptions() {
 		return sectionOptions;
 	}
+
+	public boolean hasNoSectionOption() {
+		return sectionOptions.isEmpty();
+	}
 }
