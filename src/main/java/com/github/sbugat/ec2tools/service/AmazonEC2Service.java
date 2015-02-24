@@ -153,7 +153,7 @@ public class AmazonEC2Service {
 		}
 
 		// Return the current state
-		final InstanceStateName instanceState = InstanceStateName.valueOf(instanceStatusList.get(0).getInstanceState().getName());
+		final InstanceStateName instanceState = InstanceStateName.fromValue(instanceStatusList.get(0).getInstanceState().getName());
 		log.info("Instance {} current state is {}", instanceId, instanceState);
 		log.exit(instanceState);
 		return instanceState;
