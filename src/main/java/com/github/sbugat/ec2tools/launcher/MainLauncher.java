@@ -1,6 +1,5 @@
 package com.github.sbugat.ec2tools.launcher;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.slf4j.ext.XLogger;
@@ -10,12 +9,16 @@ import com.github.sbugat.ec2tools.EC2StartStopMain;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class MainLauncher {
+public final class MainLauncher {
 
 	/** SLF4J XLogger. */
 	private static final XLogger log = XLoggerFactory.getXLogger(EC2StartStopMain.class);
 
 	private static final String MAIN_METHOD_NAME = "main";
+
+	private MainLauncher() {
+		throw new UnsupportedOperationException();
+	}
 
 	public static void launcher(@SuppressWarnings("rawtypes") final Class classToLaunch, final String args[]) throws Exception {
 
@@ -42,17 +45,11 @@ public class MainLauncher {
 					log.exit(e);
 					throw e;
 				}
-				catch (final InvocationTargetException e) {
-					log.error("Cannot call method {} in the class {}", MAIN_METHOD_NAME, classToLaunch, e);
-					log.exit(e);
-					throw e;
-				}
 				catch (final Exception e) {
 					log.error("Execution error in method {} of the class {}", MAIN_METHOD_NAME, classToLaunch, e);
 					log.exit(e);
 					throw e;
 				}
-
 			}
 		}
 
