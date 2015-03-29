@@ -8,7 +8,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.sbugat.ec2tools</groupId>
-	<artifactId>start-stop-ec2-tools</artifactId>
+	<artifactId>aws-ec2-start-stop-tools</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>Amazon AWS EC2 start stop tools</name>
