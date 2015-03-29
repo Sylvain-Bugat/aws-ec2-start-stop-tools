@@ -1,5 +1,7 @@
 package com.github.sbugat.ec2tools.service.configuration;
 
+import java.util.ArrayList;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
@@ -48,6 +50,9 @@ public class ConfigurationServiceTest extends GenericMockitoTest {
 		inOrder.verify(hierarchicalINIConfiguration).clear();
 		inOrder.verify(hierarchicalINIConfiguration).load(ConfigurationService.CONFIGURATION_FILE_NAME);
 		inOrder.verify(hierarchicalINIConfiguration).getSections();
+
+		Assertions.assertThat(configurationService.getConfiguredSections()).isEmpty();
+		Assertions.assertThat(configurationService.toString()).isEmpty();
 	}
 
 	@Test
@@ -66,6 +71,9 @@ public class ConfigurationServiceTest extends GenericMockitoTest {
 
 			inOrder.verify(hierarchicalINIConfiguration).clear();
 			inOrder.verify(hierarchicalINIConfiguration).load(ConfigurationService.CONFIGURATION_FILE_NAME);
+
+			Assertions.assertThat(configurationService.getConfiguredSections()).isEmpty();
+			Assertions.assertThat(configurationService.toString()).isEmpty();
 		}
 	}
 
@@ -88,5 +96,37 @@ public class ConfigurationServiceTest extends GenericMockitoTest {
 		inOrder.verify(hierarchicalINIConfiguration).getSection(SECTION);
 
 		Assertions.assertThat(configurationService.getConfiguredSections()).containsOnly(MapEntry.entry(SECTION, Lists.newArrayList(new InstanceOrder(INSTANCE_ID, OrderType.START.toString()))));
+		Assertions.assertThat(configurationService.getConfiguredSections(SECTION)).containsOnly(new InstanceOrder(INSTANCE_ID, OrderType.START.toString()));
+
+		final String expectedConfiguration = "Section section" + System.lineSeparator() + "	instance id:START" + System.lineSeparator();
+		Assertions.assertThat(configurationService.toString()).isEqualTo(expectedConfiguration);
+		Assertions.assertThat(configurationService.toString(Lists.newArrayList(SECTION))).isEqualTo(expectedConfiguration);
+		Assertions.assertThat(configurationService.toString(Lists.newArrayList(""))).isEmpty();
+	}
+
+	@Test
+	public void testLoadEmptyConfiguration() throws ConfigurationException {
+
+		Mockito.doReturn(Sets.newLinkedHashSet(SECTION)).when(hierarchicalINIConfiguration).getSections();
+
+		final SubnodeConfiguration subnodeConfiguration = new SubnodeConfiguration(new HierarchicalConfiguration(), new HierarchicalConfiguration.Node());
+		Mockito.doReturn(subnodeConfiguration).when(hierarchicalINIConfiguration).getSection(SECTION);
+
+		configurationService.loadConfiguration();
+
+		final InOrder inOrder = Mockito.inOrder(hierarchicalINIConfiguration);
+
+		inOrder.verify(hierarchicalINIConfiguration).clear();
+		inOrder.verify(hierarchicalINIConfiguration).load(ConfigurationService.CONFIGURATION_FILE_NAME);
+		inOrder.verify(hierarchicalINIConfiguration).getSections();
+		inOrder.verify(hierarchicalINIConfiguration).getSection(SECTION);
+
+		Assertions.assertThat(configurationService.getConfiguredSections()).containsOnly(MapEntry.entry(SECTION, new ArrayList<InstanceOrder>()));
+		Assertions.assertThat(configurationService.getConfiguredSections(SECTION)).isEmpty();
+
+		final String expectedConfiguration = "Section section" + System.lineSeparator() + "	EMPTY" + System.lineSeparator();
+		Assertions.assertThat(configurationService.toString()).isEqualTo(expectedConfiguration);
+		Assertions.assertThat(configurationService.toString(Lists.newArrayList(SECTION))).isEqualTo(expectedConfiguration);
+		Assertions.assertThat(configurationService.toString(Lists.newArrayList(""))).isEmpty();
 	}
 }
