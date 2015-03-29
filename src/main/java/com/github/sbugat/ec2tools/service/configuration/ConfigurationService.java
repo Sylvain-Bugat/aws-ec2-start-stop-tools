@@ -87,19 +87,17 @@ public class ConfigurationService {
 
 		for (final Entry<String, List<InstanceOrder>> section : configuredSections.entrySet()) {
 
-			stringBuilder.append("Section {}");
+			stringBuilder.append("Section ");
 			stringBuilder.append(section.getKey());
 			stringBuilder.append(System.lineSeparator());
 
 			if (section.getValue().isEmpty()) {
 				stringBuilder.append("	EMPTY");
-				stringBuilder.append(System.lineSeparator());
 			}
 			else {
 				for (final InstanceOrder instanceOrder : section.getValue()) {
 					stringBuilder.append('	');
 					stringBuilder.append(instanceOrder);
-					stringBuilder.append(System.lineSeparator());
 				}
 			}
 
@@ -116,19 +114,17 @@ public class ConfigurationService {
 		for (final Entry<String, List<InstanceOrder>> section : configuredSections.entrySet()) {
 
 			if (sectionsToExecute.contains(section.getKey())) {
-				stringBuilder.append("Section {}");
+				stringBuilder.append("Section ");
 				stringBuilder.append(section.getKey());
 				stringBuilder.append(System.lineSeparator());
 
 				if (section.getValue().isEmpty()) {
 					stringBuilder.append("	EMPTY");
-					stringBuilder.append(System.lineSeparator());
 				}
 				else {
 					for (final InstanceOrder instanceOrder : section.getValue()) {
 						stringBuilder.append('	');
 						stringBuilder.append(instanceOrder);
-						stringBuilder.append(System.lineSeparator());
 					}
 				}
 
