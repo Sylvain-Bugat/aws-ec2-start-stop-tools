@@ -1,6 +1,6 @@
 # aws-ec2-start-stop-tools
+[![Build Status](https://travis-ci.org/Sylvain-Bugat/aws-ec2-start-stop-tools.svg?branch=master)](https://travis-ci.org/Sylvain-Bugat/aws-ec2-start-stop-tools)
 ========================
-
 Simple but useful tools to start and stop Amazon AWS EC2 instances.
 
 ## Configuration
