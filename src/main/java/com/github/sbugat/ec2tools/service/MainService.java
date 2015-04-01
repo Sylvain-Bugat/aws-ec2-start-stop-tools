@@ -31,14 +31,17 @@ public class MainService {
 
 	public void main(final String programArgs[]) throws Exception {
 
-		if (0 == programArgs.length) {
-			System.err.println(programOptionsService.getUsage());
-			log.exit();
-			return;
-		}
-
 		// Arguments checking
-		final ProgramOptions programOptions = programOptionsService.processProgramArgs(programArgs);
+		final ProgramOptions programOptions;
+		try {
+			programOptions = programOptionsService.processProgramArgs(programArgs);
+		}
+		catch (final Exception e) {
+
+			log.error("Error during argument checking", e);
+			log.exit(e);
+			throw e;
+		}
 
 		// Configuration loading
 		try {
@@ -46,7 +49,7 @@ public class MainService {
 		}
 		catch (final ConfigurationException e) {
 
-			log.error("Error during configuration loading ", e);
+			log.error("Error during configuration loading", e);
 			log.exit(e);
 			throw e;
 		}
