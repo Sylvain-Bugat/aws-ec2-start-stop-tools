@@ -9,8 +9,8 @@ import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
 import com.amazonaws.services.ec2.model.InstanceStateName;
-import com.github.sbugat.ec2tools.InstanceOrder;
-import com.github.sbugat.ec2tools.OrderType;
+import com.github.sbugat.ec2tools.model.instance.InstanceOrder;
+import com.github.sbugat.ec2tools.model.instance.OrderType;
 import com.github.sbugat.ec2tools.service.configuration.ConfigurationService;
 import com.github.sbugat.ec2tools.service.options.ProgramOptions;
 import com.github.sbugat.ec2tools.service.options.ProgramOptionsService;

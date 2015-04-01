@@ -1,4 +1,5 @@
-package com.github.sbugat.ec2tools;
+package com.github.sbugat.ec2tools.model.instance;
+
 
 /**
  * Loaded instance order.

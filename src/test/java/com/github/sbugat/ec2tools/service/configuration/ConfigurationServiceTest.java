@@ -20,8 +20,8 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.github.sbugat.GenericMockitoTest;
-import com.github.sbugat.ec2tools.InstanceOrder;
-import com.github.sbugat.ec2tools.OrderType;
+import com.github.sbugat.ec2tools.model.instance.InstanceOrder;
+import com.github.sbugat.ec2tools.model.instance.OrderType;
 
 /**
  * Configuration service test.

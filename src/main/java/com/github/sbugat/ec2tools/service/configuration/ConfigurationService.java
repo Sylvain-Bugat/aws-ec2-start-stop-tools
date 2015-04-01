@@ -15,7 +15,7 @@ import org.apache.commons.configuration.SubnodeConfiguration;
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
-import com.github.sbugat.ec2tools.InstanceOrder;
+import com.github.sbugat.ec2tools.model.instance.InstanceOrder;
 
 /**
  * Configuration loading class.
