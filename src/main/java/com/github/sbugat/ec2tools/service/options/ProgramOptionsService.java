@@ -97,6 +97,14 @@ public class ProgramOptionsService {
 			log.exit(exception);
 			throw exception;
 		}
+		// No getopt options
+		else if (getOpt.getOptind() < programArgs.length) {
+
+			System.err.println(getUsage());
+			final IllegalArgumentException exception = new IllegalArgumentException("Non-option argument detected, check the usage and all arguments");
+			log.exit(exception);
+			throw exception;
+		}
 
 		// All check are OK
 		final ProgramOptions programOptions = new ProgramOptions(execute, list, check, postCheck, sectionsToExecute);

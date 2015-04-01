@@ -54,4 +54,24 @@ public class ProgramOptions {
 	public boolean hasNoSectionOption() {
 		return sectionOptions.isEmpty();
 	}
+
+	@Override
+	public boolean equals(final Object object) {
+
+		if (this == object) {
+			return true;
+		}
+
+		if (object == null || !ProgramOptions.class.isInstance(object)) {
+			return false;
+		}
+
+		final ProgramOptions programOptions = (ProgramOptions) object;
+
+		if (executionOption != programOptions.executionOption || listOption != programOptions.listOption || checkOption != programOptions.checkOption || postCheckOption != programOptions.postCheckOption) {
+			return false;
+		}
+
+		return sectionOptions.equals(programOptions.sectionOptions);
+	}
 }
