@@ -1,4 +1,4 @@
-package com.github.sbugat.ec2tools.service;
+package com.github.sbugat.ec2tools.service.aws;
 
 import java.util.List;
 

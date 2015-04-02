@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.github.sbugat.GenericMockitoTest;
+import com.github.sbugat.ec2tools.service.aws.AmazonEC2Service;
 
 /**
  * Amazon EC2 simple service test.
