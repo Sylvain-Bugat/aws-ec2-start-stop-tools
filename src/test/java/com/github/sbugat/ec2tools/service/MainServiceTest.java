@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.amazonaws.AmazonClientException;
 import com.github.sbugat.GenericMockitoTest;
 import com.github.sbugat.ec2tools.service.aws.AmazonEC2Service;
 import com.github.sbugat.ec2tools.service.configuration.ConfigurationService;
@@ -76,6 +77,7 @@ public class MainServiceTest extends GenericMockitoTest {
 
 		Mockito.doReturn(new ProgramOptions(false, true, false, false, new ArrayList<String>())).when(programOptionsService).processProgramArgs(Mockito.any(String[].class));
 		final String[] arguments = {};
+
 		mainService.main(arguments);
 
 		Mockito.verify(programOptionsService).processProgramArgs(arguments);
@@ -87,10 +89,64 @@ public class MainServiceTest extends GenericMockitoTest {
 
 		Mockito.doReturn(new ProgramOptions(false, true, false, false, Lists.newArrayList(SECTION_1))).when(programOptionsService).processProgramArgs(Mockito.any(String[].class));
 		final String[] arguments = {};
+
 		mainService.main(arguments);
 
 		Mockito.verify(programOptionsService).processProgramArgs(arguments);
 		Mockito.verify(configurationService).loadConfiguration();
 		Mockito.verify(configurationService).toString(Lists.newArrayList(SECTION_1));
 	}
+
+	@Test(expected = AmazonClientException.class)
+	public void testMainInitializeAmazonClientException() throws Exception {
+
+		Mockito.doReturn(new ProgramOptions(true, false, false, false, Lists.newArrayList(SECTION_1))).when(programOptionsService).processProgramArgs(Mockito.any(String[].class));
+		Mockito.doThrow(new AmazonClientException(SECTION_1)).when(amazonEC2Service).initialize();
+		final String[] arguments = {};
+		try {
+			mainService.main(arguments);
+		}
+		catch (final Exception e) {
+			Mockito.verify(programOptionsService).processProgramArgs(arguments);
+			Mockito.verify(configurationService).loadConfiguration();
+			Mockito.verify(amazonEC2Service).initialize();
+			throw e;
+		}
+	}
+
+	@Test
+	public void testMain() throws Exception {
+
+		final ProgramOptions programOptions = new ProgramOptions(true, false, false, false, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(programOptions).when(programOptionsService).processProgramArgs(Mockito.any(String[].class));
+		Mockito.doReturn(false).when(startStopService).processAllSections(programOptions);
+		final String[] arguments = {};
+
+		mainService.main(arguments);
+
+		Mockito.verify(programOptionsService).processProgramArgs(arguments);
+		Mockito.verify(configurationService).loadConfiguration();
+		Mockito.verify(amazonEC2Service).initialize();
+		Mockito.verify(startStopService).processAllSections(programOptions);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void testMainProcessError() throws Exception {
+
+		final ProgramOptions programOptions = new ProgramOptions(true, false, false, false, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(programOptions).when(programOptionsService).processProgramArgs(Mockito.any(String[].class));
+		Mockito.doReturn(true).when(startStopService).processAllSections(programOptions);
+		final String[] arguments = {};
+		try {
+			mainService.main(arguments);
+		}
+		catch (final Exception e) {
+			Mockito.verify(programOptionsService).processProgramArgs(arguments);
+			Mockito.verify(configurationService).loadConfiguration();
+			Mockito.verify(amazonEC2Service).initialize();
+			Mockito.verify(startStopService).processAllSections(programOptions);
+			throw e;
+		}
+	}
+
 }
