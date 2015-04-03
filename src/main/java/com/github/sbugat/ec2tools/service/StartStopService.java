@@ -78,7 +78,7 @@ public class StartStopService {
 	 * Process an order to start or stop an Amazon EC2 instance
 	 * 
 	 * @param instanceOrder order to process
-	 * @return true is the order has been processed with success, false otherwise
+	 * @return false is the order has been processed with success, true otherwise
 	 */
 	private boolean processOrder(final InstanceOrder instanceOrder) {
 
@@ -92,8 +92,8 @@ public class StartStopService {
 			// Starting error
 			catch (final Exception e) {
 				log.error("Error starting instance {}", instanceOrder.instanceId, e);
-				log.exit(false);
-				return false;
+				log.exit(true);
+				return true;
 			}
 		}
 		// Stoping instance order
@@ -105,13 +105,13 @@ public class StartStopService {
 			// Stopping error
 			catch (final Exception e) {
 				log.error("Error stopping instance {}", instanceOrder.instanceId, e);
-				log.exit(false);
-				return false;
+				log.exit(true);
+				return true;
 			}
 		}
 
-		log.exit(true);
-		return true;
+		log.exit(false);
+		return false;
 	}
 
 	/**
