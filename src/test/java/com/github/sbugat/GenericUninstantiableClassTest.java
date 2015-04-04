@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
 
-public class GenericUninstantiableClassTest {
+public abstract class GenericUninstantiableClassTest {
 
 	@Test(expected = InvocationTargetException.class)
 	public void testUninstantiableClassConstructor() throws Exception {
