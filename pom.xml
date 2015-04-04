@@ -54,6 +54,7 @@
 		<maven.pluginsite.version>3.4</maven.pluginsite.version>
 		<maven.plugincompiler.version>3.3</maven.plugincompiler.version>
 		<maven.pluginsurefire.version>2.18.1</maven.pluginsurefire.version>
+		<maven.pluginfailsafe.version>2.18.1</maven.pluginfailsafe.version>
 		<maven.pluginversions.version>2.1</maven.pluginversions.version>
 		<maven.pluginjar.version>2.6</maven.pluginjar.version>
 		<maven.pluginresources.version>2.7</maven.pluginresources.version>
@@ -223,6 +224,21 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<version>${maven.pluginsurefire.version}</version>
+					</plugin>
+					
+					<!-- Integration Testing Launcher Plugins configuration -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>${maven.pluginfailsafe.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 
 					<!-- Deploy Plugins configuration -->
