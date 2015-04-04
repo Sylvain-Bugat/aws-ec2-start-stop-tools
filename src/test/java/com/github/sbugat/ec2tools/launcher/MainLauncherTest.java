@@ -1,17 +1,18 @@
 package com.github.sbugat.ec2tools.launcher;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
+
+import com.github.sbugat.GenericUninstantiableClassTest;
 
 /**
  * Main launcher test.
  * 
  * @author Sylvain Bugat
  */
-public class MainLauncherTest {
+public class MainLauncherTest extends GenericUninstantiableClassTest {
 
 	@Test(expected = NoSuchMethodException.class)
 	public void testNoMainMethodLauncher() throws Exception {
@@ -48,12 +49,5 @@ public class MainLauncherTest {
 	public void testIOExceptionLauncher() throws Exception {
 		MockLauncher.setNextExceptionClass(IOException.class);
 		MainLauncher.launcher(MockLauncher.class, null);
-	}
-
-	@Test(expected = InvocationTargetException.class)
-	public void testLauncherConstructor() throws Exception {
-		final Constructor<MainLauncher> mainLauncherConstructor = MainLauncher.class.getDeclaredConstructor();
-		mainLauncherConstructor.setAccessible(true);
-		mainLauncherConstructor.newInstance();
 	}
 }

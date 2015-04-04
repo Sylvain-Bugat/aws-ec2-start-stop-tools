@@ -12,10 +12,14 @@ import com.github.sbugat.ec2tools.service.MainService;
  * @author Sylvain Bugat
  * 
  */
-public class EC2StartStopMain {
+public final class EC2StartStopMain {
 
 	/** SLF4J XLogger. */
 	private static final XLogger log = XLoggerFactory.getXLogger(EC2StartStopMain.class);
+
+	private EC2StartStopMain() {
+		throw new UnsupportedOperationException();
+	}
 
 	public static void main(final String args[]) throws Exception {
 

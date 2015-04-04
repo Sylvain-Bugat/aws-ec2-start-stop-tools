@@ -4,7 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
 
-public class EC2StartStopMainIT {
+import com.github.sbugat.GenericUninstantiableClassTest;
+
+public class EC2StartStopMainIT extends GenericUninstantiableClassTest {
 
 	@Test
 	public void testEC2StartStopMain() throws Exception {
