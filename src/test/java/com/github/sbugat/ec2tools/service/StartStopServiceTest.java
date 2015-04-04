@@ -198,4 +198,82 @@ public class StartStopServiceTest extends GenericMockitoTest {
 		Mockito.verify(configurationService).getConfiguredSections(SECTION_1);
 		Mockito.verify(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
 	}
+
+	@Test
+	public void testProcessAllSectionsPostCheckStartOrderRunningInstance() {
+
+		final ProgramOptions programOptions = new ProgramOptions(false, false, false, true, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(Lists.newArrayList(new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString()))).when(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.doReturn(InstanceStateName.Running).when(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+
+		Assertions.assertThat(startStopService.processAllSections(programOptions)).isFalse();
+
+		Mockito.verify(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.verify(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+	}
+
+	@Test
+	public void testProcessAllSectionsPostCheckStartOrderStoppedInstance() {
+
+		final ProgramOptions programOptions = new ProgramOptions(false, false, false, true, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(Lists.newArrayList(new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString()))).when(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.doReturn(InstanceStateName.Stopped).when(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+
+		Assertions.assertThat(startStopService.processAllSections(programOptions)).isTrue();
+
+		Mockito.verify(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.verify(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+	}
+
+	@Test
+	public void testProcessAllSectionsPostCheckStartOrderException() {
+
+		final ProgramOptions programOptions = new ProgramOptions(false, false, false, true, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(Lists.newArrayList(new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString()))).when(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.doThrow(new AmazonClientException("")).when(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+
+		Assertions.assertThat(startStopService.processAllSections(programOptions)).isTrue();
+
+		Mockito.verify(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.verify(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+	}
+
+	@Test
+	public void testProcessAllSectionsPostCheckStopOrderStoppedInstance() {
+
+		final ProgramOptions programOptions = new ProgramOptions(false, false, false, true, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(Lists.newArrayList(new InstanceOrder(INSTANCE_ID_1, OrderType.STOP.toString()))).when(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.doReturn(InstanceStateName.Stopped).when(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+
+		Assertions.assertThat(startStopService.processAllSections(programOptions)).isFalse();
+
+		Mockito.verify(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.verify(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+	}
+
+	@Test
+	public void testProcessAllSectionsPostCheckStopOrderRunningInstance() {
+
+		final ProgramOptions programOptions = new ProgramOptions(false, false, false, true, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(Lists.newArrayList(new InstanceOrder(INSTANCE_ID_1, OrderType.STOP.toString()))).when(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.doReturn(InstanceStateName.Running).when(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+
+		Assertions.assertThat(startStopService.processAllSections(programOptions)).isTrue();
+
+		Mockito.verify(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.verify(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+	}
+
+	@Test
+	public void testProcessAllSectionsPostCheckStopOrderException() {
+
+		final ProgramOptions programOptions = new ProgramOptions(false, false, false, true, Lists.newArrayList(SECTION_1));
+		Mockito.doReturn(Lists.newArrayList(new InstanceOrder(INSTANCE_ID_1, OrderType.STOP.toString()))).when(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.doThrow(new AmazonClientException("")).when(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+
+		Assertions.assertThat(startStopService.processAllSections(programOptions)).isTrue();
+
+		Mockito.verify(configurationService).getConfiguredSections(SECTION_1);
+		Mockito.verify(amazonEC2Service).getInstanceStatus(INSTANCE_ID_1);
+	}
 }
