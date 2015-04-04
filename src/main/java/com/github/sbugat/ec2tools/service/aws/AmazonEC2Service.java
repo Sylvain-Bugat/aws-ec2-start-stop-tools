@@ -136,6 +136,15 @@ public class AmazonEC2Service {
 		log.entry();
 		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(instanceId);
 		final DescribeInstanceStatusResult describeInstanceStatusResult = amazonEC2Client.describeInstanceStatus(describeInstanceStatusRequest);
+
+		// Result error
+		if (null == describeInstanceStatusResult || null == describeInstanceStatusResult.getInstanceStatuses()) {
+
+			final AmazonClientException exception = new AmazonClientException("No instance found with id:" + instanceId);
+			log.exit(exception);
+			throw exception;
+		}
+
 		final List<InstanceStatus> instanceStatusList = describeInstanceStatusResult.getInstanceStatuses();
 
 		// If none or more than one instances is found
