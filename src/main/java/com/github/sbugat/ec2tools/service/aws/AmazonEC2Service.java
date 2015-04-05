@@ -138,7 +138,7 @@ public class AmazonEC2Service {
 		final DescribeInstanceStatusResult describeInstanceStatusResult = amazonEC2Client.describeInstanceStatus(describeInstanceStatusRequest);
 
 		// Result error
-		if (null == describeInstanceStatusResult || null == describeInstanceStatusResult.getInstanceStatuses()) {
+		if (null == describeInstanceStatusResult) {
 
 			final AmazonClientException exception = new AmazonClientException("No instance found with id:" + instanceId);
 			log.exit(exception);
@@ -166,10 +166,5 @@ public class AmazonEC2Service {
 		log.info("Instance {} current state is {}", instanceId, instanceState);
 		log.exit(instanceState);
 		return instanceState;
-	}
-
-	@Override
-	public String toString() {
-		return AmazonEC2Service.class.getSimpleName() + ':' + amazonEC2Client.toString();
 	}
 }

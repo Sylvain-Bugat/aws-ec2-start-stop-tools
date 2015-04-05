@@ -1,5 +1,6 @@
 package com.github.sbugat.ec2tools.service.aws;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -132,6 +133,63 @@ public class AmazonEC2ServiceTest extends GenericMockitoTest {
 
 		try {
 			amazonEC2Service.stopInstance(INSTANCE_ID);
+		}
+		finally {
+			Mockito.verify(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
+		}
+	}
+
+	@Test
+	public void testGetInstanceStatus() {
+
+		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(INSTANCE_ID);
+		final DescribeInstanceStatusResult describeInstanceStatusResult = new DescribeInstanceStatusResult().withInstanceStatuses(new InstanceStatus().withInstanceState(new InstanceState().withName(InstanceStateName.Running)));
+
+		Mockito.doReturn(describeInstanceStatusResult).when(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
+
+		Assertions.assertThat(amazonEC2Service.getInstanceStatus(INSTANCE_ID)).isEqualTo(InstanceStateName.Running);
+
+		Mockito.verify(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
+	}
+
+	@Test(expected = AmazonClientException.class)
+	public void testGetInstanceStatusNull() {
+
+		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(INSTANCE_ID);
+		try {
+			amazonEC2Service.getInstanceStatus(INSTANCE_ID);
+		}
+		finally {
+			Mockito.verify(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
+		}
+	}
+
+	@Test(expected = AmazonClientException.class)
+	public void testGetInstanceStatusEmpty() {
+
+		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(INSTANCE_ID);
+		final DescribeInstanceStatusResult describeInstanceStatusResult = new DescribeInstanceStatusResult();
+
+		Mockito.doReturn(describeInstanceStatusResult).when(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
+
+		try {
+			amazonEC2Service.getInstanceStatus(INSTANCE_ID);
+		}
+		finally {
+			Mockito.verify(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
+		}
+	}
+
+	@Test(expected = AmazonClientException.class)
+	public void testGetInstanceStatusMultipleInstances() {
+
+		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(INSTANCE_ID);
+		final DescribeInstanceStatusResult describeInstanceStatusResult = new DescribeInstanceStatusResult().withInstanceStatuses(new InstanceStatus().withInstanceState(new InstanceState().withName(InstanceStateName.Running)), new InstanceStatus().withInstanceState(new InstanceState().withName(InstanceStateName.Running)));
+
+		Mockito.doReturn(describeInstanceStatusResult).when(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
+
+		try {
+			amazonEC2Service.getInstanceStatus(INSTANCE_ID);
 		}
 		finally {
 			Mockito.verify(amazonEC2Client).describeInstanceStatus(describeInstanceStatusRequest);
