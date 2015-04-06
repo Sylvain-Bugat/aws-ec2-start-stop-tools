@@ -12,6 +12,39 @@
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>Amazon AWS EC2 start stop tools</name>
+	<inceptionYear>2014</inceptionYear>
+	<url>https://github.com/Sylvain-Bugat/aws-ec2-start-stop-tools</url>
+
+	<scm>
+		<url>https://github.com/Sylvain-Bugat/aws-ec2-start-stop-tools</url>
+		<connection>scm:git:git://github.com/Sylvain-Bugat/aws-ec2-start-stop-tools.git</connection>
+		<developerConnection>scm:git:git@github.com:Sylvain-Bugat/aws-ec2-start-stop-tools.git</developerConnection>
+	</scm>
+	<distributionManagement>
+		<site>
+			<id>aws-ec2-start-stop-tools-site</id>
+			<url>scm:git:git://github.com/Sylvain-Bugat/aws-ec2-start-stop-tools.git</url>
+		</site>
+	</distributionManagement>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/Sylvain-Bugat/aws-ec2-start-stop-tools/issues</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>The MIT License</name>
+			<url>https://raw.githubusercontent.com/Sylvain-Bugat/aws-ec2-start-stop-tools/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>sbugat</id>
+			<name>Sylvain Bugat</name>
+			<url>https://github.com/Sylvain-Bugat</url>
+		</developer>
+	</developers>
 
 	<!-- Global properties -->
 	<properties>
