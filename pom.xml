@@ -33,7 +33,7 @@
 
 	<licenses>
 		<license>
-			<name>The MIT License</name>
+			<name>The Apache Software License, Version 2.0</name>
 			<url>https://raw.githubusercontent.com/Sylvain-Bugat/aws-ec2-start-stop-tools/master/LICENSE</url>
 			<distribution>repo</distribution>
 		</license>
@@ -48,8 +48,11 @@
 
 	<!-- Global properties -->
 	<properties>
+
 		<!-- Source Encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Reporting Encoding -->
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- JDK/JRE Version -->
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -95,6 +98,22 @@
 		<maven.pluginassembly.version>2.5.3</maven.pluginassembly.version>
 		<maven.plugincoveralls.version>3.1.0</maven.plugincoveralls.version>
 		<maven.pluginjacoco.version>0.7.4.201502262128</maven.pluginjacoco.version>
+		<maven.pluginantrun.version>1.8</maven.pluginantrun.version>
+		<maven.plugindependency.version>2.10</maven.plugindependency.version>
+		<maven.pluginrelease.version>2.5.1</maven.pluginrelease.version>
+		<maven.pluginscmpublish.version>1.1</maven.pluginscmpublish.version>
+
+		<!-- Maven reporting plugins -->
+		<maven.pluginversions.version>2.1</maven.pluginversions.version>
+		<maven.pluginowasp.version>1.2.7</maven.pluginowasp.version>
+		<maven.pluginpmd.version>3.4</maven.pluginpmd.version>
+		<maven.pluginfindbugs.version>3.0.1</maven.pluginfindbugs.version>
+		<maven.plugincheckstyle.version>2.15</maven.plugincheckstyle.version>
+		<maven.pluginreports.version>2.8</maven.pluginreports.version>
+		<maven.plugintaglist.version>2.4</maven.plugintaglist.version>
+		<maven.pluginchanges.version>2.11</maven.pluginchanges.version>
+		<maven.pluginjavadoc.version>2.10.2</maven.pluginjavadoc.version>
+		<maven.pluginjxr.version>2.5</maven.pluginjxr.version>
 	</properties>
 
 	<!-- Dependencies -->
@@ -204,172 +223,317 @@
 		</dependency>
 	</dependencies>
 
-	<!-- Profiles -->
-	<profiles>
-		<profile>
-			<!-- Default profile -->
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+	<build>
+		<plugins>
 
-			<build>
-				<plugins>
+			<!-- Compiler Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.plugincompiler.version}</version>
+				<configuration>
+					<compilerVersion>${maven.compiler.source}</compilerVersion>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<compilerArgs>
+						<arg>-Xlint</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
 
-					<!-- Compiler Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>${maven.plugincompiler.version}</version>
-						<configuration>
-							<compilerVersion>${maven.compiler.source}</compilerVersion>
-							<source>${maven.compiler.source}</source>
-							<target>${maven.compiler.target}</target>
-							<compilerArgs>
-								<arg>-Xlint</arg>
-							</compilerArgs>
-						</configuration>
-					</plugin>
+			<!-- Install Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>${maven.plugininstall.version}</version>
+			</plugin>
 
-					<!-- Install Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-						<version>${maven.plugininstall.version}</version>
-					</plugin>
+			<!-- Clean Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>${maven.pluginclean.version}</version>
+			</plugin>
 
-					<!-- Clean Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-clean-plugin</artifactId>
-						<version>${maven.pluginclean.version}</version>
-					</plugin>
+			<!-- Clean Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${maven.pluginsite.version}</version>
+			</plugin>
 
-					<!-- Clean Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-site-plugin</artifactId>
-						<version>${maven.pluginsite.version}</version>
-					</plugin>
+			<!-- Testing Launcher Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.pluginsurefire.version}</version>
+			</plugin>
+			
+			<!-- Integration Testing Launcher Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven.pluginfailsafe.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-					<!-- Testing Launcher Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven.pluginsurefire.version}</version>
-					</plugin>
-					
-					<!-- Integration Testing Launcher Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>${maven.pluginfailsafe.version}</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+			<!-- Deploy Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven.plugindeploy.version}</version>
+			</plugin>
 
-					<!-- Deploy Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-deploy-plugin</artifactId>
-						<version>${maven.plugindeploy.version}</version>
-					</plugin>
+			<!-- Resources Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven.pluginresources.version}</version>
+			</plugin>
 
-					<!-- Resources Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>${maven.pluginresources.version}</version>
-					</plugin>
+			<!-- Jar Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven.pluginjar.version}</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>com.github.sbugat.ec2tools.EC2StartStopMain</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
 
-					<!-- Jar Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jar-plugin</artifactId>
-						<version>${maven.pluginjar.version}</version>
-						<configuration>
-							<archive>
-								<manifest>
-									<addClasspath>true</addClasspath>
-									<mainClass>com.github.sbugat.ec2tools.EC2StartStopMain</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
-					</plugin>
+			<!-- Assembly Plugins configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${maven.pluginassembly.version}</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.github.sbugat.ec2tools.EC2StartStopMain</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-					<!-- Assembly Plugins configuration -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-assembly-plugin</artifactId>
-						<version>${maven.pluginassembly.version}</version>
-						<configuration>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-							<archive>
-								<manifest>
-									<mainClass>com.github.sbugat.ec2tools.EC2StartStopMain</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>single</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+			<!-- Tests coverage plugin configuration -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${maven.pluginjacoco.version}</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-					<!-- Tests coverage plugin configuration -->
-					<plugin>
-						<groupId>org.jacoco</groupId>
-						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>${maven.pluginjacoco.version}</version>
-						<executions>
-							<execution>
-								<id>prepare-agent</id>
-								<goals>
-									<goal>prepare-agent</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+			<!-- Tests coverage report with coveralls.io plugin configuration -->
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>${maven.plugincoveralls.version}</version>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven.pluginassembly.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>${maven.pluginantrun.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven.plugindependency.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven.pluginrelease.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-publish-plugin</artifactId>
+					<version>${maven.pluginscmpublish.version}</version>
+					<configuration>
+						<checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
+						<checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
+						<content>${project.reporting.outputDirectory}</content>
+						<skipDeletedFiles>true</skipDeletedFiles>
+						<pubScmUrl>scm:git:git@github.com:Sylvain-Bugat/RundeckMonitor.git</pubScmUrl>
+						<scmBranch>gh-pages</scmBranch>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
-					<!-- Tests coverage report with coveralls.io plugin configuration -->
-					<plugin>
-						<groupId>org.eluder.coveralls</groupId>
-						<artifactId>coveralls-maven-plugin</artifactId>
-						<version>${maven.plugincoveralls.version}</version>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<!-- Dependencies checker profile -->
-		<!-- Dependencies and plugins versions can be checked with the maven command: mvn versions:display-plugin-updates versions:display-property-updates -P default,dependencies.check -->
-		<profile>
-			<id>dependencies.check</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>versions-maven-plugin</artifactId>
-						<version>${maven.pluginversions.version}</version>
-						<configuration>
-							<rulesUri>file:./dependencies-check-rules.xml</rulesUri>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+	<!-- Reports for the maven site, publish with "mvn scm-publish:publish-scm" from a git shell-->
+	<reporting>
+		<plugins>
+			<!-- Reporting plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven.pluginreports.version}</version>
+			</plugin>
+			<!-- Changes report -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>${maven.pluginchanges.version}</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<!-- TODO/FIXME tags -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+				<version>${maven.plugintaglist.version}</version>
+				<configuration>
+					<tagListOptions>
+						<tagClasses>
+							<tagClass>
+							<displayName>Todo and fix</displayName>
+							<tags>
+								<tag>
+									<matchString>todo</matchString>
+									<matchType>ignoreCase</matchType>
+								</tag>
+								<tag>
+									<matchString>FIXME</matchString>
+									<matchType>exact</matchType>
+								</tag>
+							</tags>
+						  </tagClass>
+						</tagClasses>
+					</tagListOptions>
+				</configuration>
+			</plugin>
+			<!-- Dependencies check -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${maven.pluginversions.version}</version>
+				<configuration>
+					<rulesUri>file:./dependencies-check-rules.xml</rulesUri>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>property-updates-report</report>
+							<report>dependency-updates-report</report>
+							<report>plugin-updates-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<!-- OWASP dependencies check report-->
+			<!--<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>${maven.pluginowasp.version}</version>
+				<configuration>
+					<suppressionFile>./owasp-false-positive.xml</suppressionFile>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>check</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>-->
+			<!-- PMD/CPD -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${maven.pluginpmd.version}</version>
+				<configuration>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<targetJdk>${maven.compiler.source}</targetJdk>
+					<linkXref>true</linkXref>
+				</configuration>
+			</plugin>
+			<!-- Findbugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven.pluginfindbugs.version}</version>
+				<configuration>
+					<effort>Max</effort>
+					<threshold>Low</threshold>
+					<xmlOutput>true</xmlOutput>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<jvmArgs>-Duser.language=en -Duser.country=US</jvmArgs>
+				</configuration>
+			</plugin>
+			<!-- CheckStyle -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven.plugincheckstyle.version}</version>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+			<!-- Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.pluginjavadoc.version}</version>
+				<configuration>
+					<show>private</show>
+					<source>${maven.compiler.source}</source>
+					<links>
+						<link>http://rundeck.github.io/rundeck-api-java-client/apidocs</link>
+					</links>
+				</configuration>
+			</plugin>
+			<!-- Inline sources report -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>${maven.pluginjxr.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
 </project>
