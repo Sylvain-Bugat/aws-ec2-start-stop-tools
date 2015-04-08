@@ -1,17 +1,24 @@
 package com.github.sbugat.ec2tools.model.instance;
 
-
 /**
  * Loaded instance order.
  * 
  * @author Sylvain Bugat
  */
-public class InstanceOrder {
+public final class InstanceOrder {
 
+	/** Instande identifier of the order. */
 	public final String instanceId;
 
+	/** Type of the order. */
 	public final OrderType orderType;
 
+	/**
+	 * Copy arguments constructor.
+	 * 
+	 * @param instanceIdArg instance identifier to copy
+	 * @param orderTypeArg order type to copy
+	 */
 	public InstanceOrder(final String instanceIdArg, final String orderTypeArg) {
 
 		instanceId = instanceIdArg;
