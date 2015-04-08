@@ -7,6 +7,7 @@ import com.github.sbugat.ec2tools.launcher.MainLauncher;
 import com.github.sbugat.ec2tools.service.MainService;
 
 /**
+ * Main class of the start-stop EC2 tools.
  * 
  * @author Sylvain Bugat
  * 
