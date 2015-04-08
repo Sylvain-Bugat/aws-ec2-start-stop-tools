@@ -26,7 +26,7 @@ import com.github.sbugat.ec2tools.model.instance.InstanceOrder;
 public class ConfigurationService {
 
 	/** SLF4J Xlogger. */
-	private static final XLogger log = XLoggerFactory.getXLogger(ConfigurationService.class);
+	private static final XLogger LOG = XLoggerFactory.getXLogger(ConfigurationService.class);
 
 	/** Configuration file name. */
 	public static final String CONFIGURATION_FILE_NAME = "ec2tools.ini";
@@ -40,7 +40,7 @@ public class ConfigurationService {
 
 	public void loadConfiguration() throws ConfigurationException {
 
-		log.entry();
+		LOG.entry();
 		configuredSections.clear();
 
 		hierarchicalINIConfiguration.clear();
@@ -49,7 +49,7 @@ public class ConfigurationService {
 		// Sections loading
 		for (final String section : hierarchicalINIConfiguration.getSections()) {
 
-			log.info("Loading section: {}", section);
+			LOG.info("Loading section: {}", section);
 
 			final List<InstanceOrder> sectionList = new ArrayList<InstanceOrder>();
 			configuredSections.put(section, sectionList);
@@ -60,14 +60,14 @@ public class ConfigurationService {
 			while (iterator.hasNext()) {
 
 				final String instanceId = iterator.next();
-				log.trace("Loading configuration for instanceId: {} -> order: {}", instanceId, subnodeConfiguration.getString(instanceId));
+				LOG.trace("Loading configuration for instanceId: {} -> order: {}", instanceId, subnodeConfiguration.getString(instanceId));
 				sectionList.add(new InstanceOrder(instanceId, subnodeConfiguration.getString(instanceId)));
 			}
 
-			log.info("section {} loaded with {} orders", section, sectionList.size());
+			LOG.info("section {} loaded with {} orders", section, sectionList.size());
 		}
 
-		log.exit();
+		LOG.exit();
 	}
 
 	public Map<String, List<InstanceOrder>> getConfiguredSections() {

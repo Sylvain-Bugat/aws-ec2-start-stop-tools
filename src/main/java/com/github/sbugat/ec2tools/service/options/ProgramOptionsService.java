@@ -13,7 +13,7 @@ import com.github.sbugat.ec2tools.EC2StartStopMain;
 public class ProgramOptionsService {
 
 	/*** SLF4J XLogger. */
-	private static final XLogger log = XLoggerFactory.getXLogger(ProgramOptionsService.class);
+	private static final XLogger LOG = XLoggerFactory.getXLogger(ProgramOptionsService.class);
 
 	private static final String USAGE = "Usage: [-l] [-e|-c|-p -s <section1> -s <section2> ... ]";
 	private static final String USAGE_LIST = "[-l]: list configuration ";
@@ -68,7 +68,7 @@ public class ProgramOptionsService {
 			default:
 				System.err.println(getUsage());
 				final IllegalArgumentException exception = new IllegalArgumentException("Unknow option:" + option);
-				log.exit(exception);
+				LOG.exit(exception);
 				throw exception;
 			}
 
@@ -79,14 +79,14 @@ public class ProgramOptionsService {
 		if (0 == exclusiveOptionsCount) {
 			System.err.println(getUsage());
 			final IllegalArgumentException exception = new IllegalArgumentException("One of list, execute, check and post-check options is mandatory ");
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 		// Multiple exclusive options
 		else if (exclusiveOptionsCount > 1) {
 			System.err.println(getUsage());
 			final IllegalArgumentException exception = new IllegalArgumentException("List, execute, check and post-check options are exclusive");
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 		// Missing section option
@@ -94,7 +94,7 @@ public class ProgramOptionsService {
 
 			System.err.println(getUsage());
 			final IllegalArgumentException exception = new IllegalArgumentException("Execute, check and post-check options need one or more section option");
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 		// No getopt options
@@ -102,13 +102,13 @@ public class ProgramOptionsService {
 
 			System.err.println(getUsage());
 			final IllegalArgumentException exception = new IllegalArgumentException("Non-option argument detected, check the usage and all arguments");
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 
 		// All check are OK
 		final ProgramOptions programOptions = new ProgramOptions(execute, list, check, postCheck, sectionsToExecute);
-		log.exit(programOptions);
+		LOG.exit(programOptions);
 		return programOptions;
 	}
 

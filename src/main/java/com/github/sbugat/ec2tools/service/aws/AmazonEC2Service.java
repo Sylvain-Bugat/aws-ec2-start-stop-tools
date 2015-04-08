@@ -29,7 +29,7 @@ import com.amazonaws.services.ec2.model.StopInstancesResult;
 public class AmazonEC2Service {
 
 	/*** SLF4J XLogger. */
-	private static final XLogger log = XLoggerFactory.getXLogger(AmazonEC2Service.class);
+	private static final XLogger LOG = XLoggerFactory.getXLogger(AmazonEC2Service.class);
 
 	/** Amazon EC2 service access. */
 	@Inject
@@ -42,18 +42,18 @@ public class AmazonEC2Service {
 	 */
 	public void initialize() throws AmazonClientException {
 
-		log.entry();
-		log.info("Initialize ECS AWS client");
+		LOG.entry();
+		LOG.info("Initialize ECS AWS client");
 
 		// AWS client initialization
 		// TODO region customization
 		amazonEC2Client.setRegion(Region.getRegion(Regions.EU_WEST_1));
 
 		// Simple connection test
-		log.info("AWS configuration loaded, now doing connection test...");
+		LOG.info("AWS configuration loaded, now doing connection test...");
 		amazonEC2Client.describeAvailabilityZones();
-		log.info("Connection with AWS OK");
-		log.exit();
+		LOG.info("Connection with AWS OK");
+		LOG.exit();
 	}
 
 	/**
@@ -63,17 +63,17 @@ public class AmazonEC2Service {
 	 */
 	public void startInstance(final String instanceId) {
 
-		log.entry();
-		log.info("Starting instance {}", instanceId);
+		LOG.entry();
+		LOG.info("Starting instance {}", instanceId);
 
 		// Check the instance state
 		final InstanceStateName instanteState = getInstanceStatus(instanceId);
 		if (InstanceStateName.Stopped != instanteState) {
 
 			final String message = "Instance " + instanceId + " is not stopped, current state: " + instanteState;
-			log.error(message);
+			LOG.error(message);
 			final AmazonClientException exception = new AmazonClientException(message);
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 
@@ -84,11 +84,11 @@ public class AmazonEC2Service {
 
 		for (final InstanceStateChange instanceStateChange : instanceStateChangeList) {
 
-			log.info("Instance {} has changing state: {} -> {}", instanceStateChange.getInstanceId(), instanceStateChange.getPreviousState(), instanceStateChange.getCurrentState());
+			LOG.info("Instance {} has changing state: {} -> {}", instanceStateChange.getInstanceId(), instanceStateChange.getPreviousState(), instanceStateChange.getCurrentState());
 		}
 
-		log.info("Instance {} is starting", instanceId);
-		log.exit();
+		LOG.info("Instance {} is starting", instanceId);
+		LOG.exit();
 	}
 
 	/**
@@ -98,16 +98,16 @@ public class AmazonEC2Service {
 	 */
 	public void stopInstance(final String instanceId) {
 
-		log.entry();
-		log.info("Stoping instance {}", instanceId);
+		LOG.entry();
+		LOG.info("Stoping instance {}", instanceId);
 
 		// Check the instance state
 		final InstanceStateName instanteState = getInstanceStatus(instanceId);
 		if (InstanceStateName.Running != instanteState) {
 
 			final String message = "Instance " + instanceId + " is not running, current status: " + instanteState;
-			log.error(message);
-			log.exit(message);
+			LOG.error(message);
+			LOG.exit(message);
 			throw new AmazonClientException(message);
 		}
 
@@ -118,11 +118,11 @@ public class AmazonEC2Service {
 
 		for (final InstanceStateChange instanceStateChange : instanceStateChangeList) {
 
-			log.info("Instance {} has changing state: {} -> {}", instanceStateChange.getInstanceId(), instanceStateChange.getPreviousState(), instanceStateChange.getCurrentState());
+			LOG.info("Instance {} has changing state: {} -> {}", instanceStateChange.getInstanceId(), instanceStateChange.getPreviousState(), instanceStateChange.getCurrentState());
 		}
 
-		log.info("Instance {} is stoping", instanceId);
-		log.exit();
+		LOG.info("Instance {} is stoping", instanceId);
+		LOG.exit();
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class AmazonEC2Service {
 	 */
 	public InstanceStateName getInstanceStatus(final String instanceId) {
 
-		log.entry();
+		LOG.entry();
 		final DescribeInstanceStatusRequest describeInstanceStatusRequest = new DescribeInstanceStatusRequest().withIncludeAllInstances(true).withInstanceIds(instanceId);
 		final DescribeInstanceStatusResult describeInstanceStatusResult = amazonEC2Client.describeInstanceStatus(describeInstanceStatusRequest);
 
@@ -141,7 +141,7 @@ public class AmazonEC2Service {
 		if (null == describeInstanceStatusResult) {
 
 			final AmazonClientException exception = new AmazonClientException("No instance found with id:" + instanceId);
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 
@@ -151,20 +151,20 @@ public class AmazonEC2Service {
 		if (instanceStatusList.isEmpty()) {
 
 			final AmazonClientException exception = new AmazonClientException("No instance found with id:" + instanceId);
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 		else if (instanceStatusList.size() > 1) {
 
 			final AmazonClientException exception = new AmazonClientException("Multiple instances found with id:" + instanceId);
-			log.exit(exception);
+			LOG.exit(exception);
 			throw exception;
 		}
 
 		// Return the current state
 		final InstanceStateName instanceState = InstanceStateName.fromValue(instanceStatusList.get(0).getInstanceState().getName());
-		log.info("Instance {} current state is {}", instanceId, instanceState);
-		log.exit(instanceState);
+		LOG.info("Instance {} current state is {}", instanceId, instanceState);
+		LOG.exit(instanceState);
 		return instanceState;
 	}
 }

@@ -14,7 +14,7 @@ import com.github.sbugat.ec2tools.service.options.ProgramOptionsService;
 public class MainService {
 
 	/** SLF4J XLogger. */
-	private static final XLogger log = XLoggerFactory.getXLogger(MainService.class);
+	private static final XLogger LOG = XLoggerFactory.getXLogger(MainService.class);
 
 	@Inject
 	private AmazonEC2Service amazonEC2Service;
@@ -28,9 +28,9 @@ public class MainService {
 	@Inject
 	private StartStopService startStopService;
 
-	public void main(final String programArgs[]) throws Exception {
+	public void main(final String[] programArgs) throws Exception {
 
-		log.entry((Object[]) programArgs);
+		LOG.entry((Object[]) programArgs);
 
 		// Arguments checking
 		final ProgramOptions programOptions;
@@ -39,8 +39,8 @@ public class MainService {
 		}
 		catch (final Exception e) {
 
-			log.error("Error during arguments checking", e);
-			log.exit(e);
+			LOG.error("Error during arguments checking", e);
+			LOG.exit(e);
 			throw e;
 		}
 
@@ -50,8 +50,8 @@ public class MainService {
 		}
 		catch (final ConfigurationException e) {
 
-			log.error("Error during configuration loading", e);
-			log.exit(e);
+			LOG.error("Error during configuration loading", e);
+			LOG.exit(e);
 			throw e;
 		}
 
@@ -74,8 +74,8 @@ public class MainService {
 			}
 			catch (final Exception e) {
 
-				log.error("Error during Amazon initialization ", e);
-				log.exit(e);
+				LOG.error("Error during Amazon initialization ", e);
+				LOG.exit(e);
 				throw e;
 			}
 
@@ -84,14 +84,14 @@ public class MainService {
 			// Return in error if a section is unknown or if an order cannot be done
 			if (processError) {
 
-				log.error("Error during sections processing");
+				LOG.error("Error during sections processing");
 
 				final RuntimeException exception = new RuntimeException();
-				log.exit(exception);
+				LOG.exit(exception);
 				throw exception;
 			}
 		}
 
-		log.exit();
+		LOG.exit();
 	}
 }
