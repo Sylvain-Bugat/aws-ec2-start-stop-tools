@@ -16,6 +16,7 @@ import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
 import com.github.sbugat.ec2tools.model.instance.InstanceOrder;
+import com.google.common.collect.ImmutableList;
 
 /**
  * Configuration loading class.
@@ -23,7 +24,7 @@ import com.github.sbugat.ec2tools.model.instance.InstanceOrder;
  * @author Sylvain Bugat
  * 
  */
-public class ConfigurationService {
+public final class ConfigurationService {
 
 	/** SLF4J Xlogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(ConfigurationService.class);
@@ -35,9 +36,14 @@ public class ConfigurationService {
 	@Inject
 	private HierarchicalINIConfiguration hierarchicalINIConfiguration;
 
-	/** Loaded configuration */
+	/** Loaded configuration. */
 	private final Map<String, List<InstanceOrder>> configuredSections = new HashMap<String, List<InstanceOrder>>();
 
+	/**
+	 * Load the configuration from the configuration file.
+	 * 
+	 * @throws ConfigurationException configuration loading exception
+	 */
 	public void loadConfiguration() throws ConfigurationException {
 
 		LOG.entry();
@@ -52,7 +58,6 @@ public class ConfigurationService {
 			LOG.info("Loading section: {}", section);
 
 			final List<InstanceOrder> sectionList = new ArrayList<InstanceOrder>();
-			configuredSections.put(section, sectionList);
 
 			final SubnodeConfiguration subnodeConfiguration = hierarchicalINIConfiguration.getSection(section);
 
@@ -64,17 +69,29 @@ public class ConfigurationService {
 				sectionList.add(new InstanceOrder(instanceId, subnodeConfiguration.getString(instanceId)));
 			}
 
+			configuredSections.put(section, ImmutableList.copyOf(sectionList));
 			LOG.info("section {} loaded with {} orders", section, sectionList.size());
 		}
 
 		LOG.exit();
 	}
 
+	/**
+	 * Get all loaded sections.
+	 * 
+	 * @return all loaded sections.
+	 */
 	public Map<String, List<InstanceOrder>> getConfiguredSections() {
 
 		return configuredSections;
 	}
 
+	/**
+	 * Get a loaded section if it exists.
+	 * 
+	 * @param section section to return
+	 * @return loaded sections or null
+	 */
 	public List<InstanceOrder> getConfiguredSections(final String section) {
 
 		return configuredSections.get(section);
@@ -107,6 +124,12 @@ public class ConfigurationService {
 		return stringBuilder.toString();
 	}
 
+	/**
+	 * Get a string representation of one section.
+	 * 
+	 * @param sectionsToExecute section to
+	 * @return the string of the section or empty if the section don't exists
+	 */
 	public String toString(final List<String> sectionsToExecute) {
 
 		final StringBuilder stringBuilder = new StringBuilder();

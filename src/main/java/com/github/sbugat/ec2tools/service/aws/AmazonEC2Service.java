@@ -22,11 +22,11 @@ import com.amazonaws.services.ec2.model.StopInstancesRequest;
 import com.amazonaws.services.ec2.model.StopInstancesResult;
 
 /**
- * Amazon EC2 simple service, init credentials with default file $HOME/.aws/credentials
+ * Amazon EC2 simple service, init credentials with default file $HOME/.aws/credentials .
  * 
  * @author Sylvain Bugat
  */
-public class AmazonEC2Service {
+public final class AmazonEC2Service {
 
 	/*** SLF4J XLogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(AmazonEC2Service.class);
@@ -38,7 +38,7 @@ public class AmazonEC2Service {
 	/**
 	 * Amazon EC2 service initialization.
 	 * 
-	 * @throws AmazonClientException
+	 * @throws AmazonClientException initialization exception
 	 */
 	public void initialize() throws AmazonClientException {
 
@@ -57,7 +57,7 @@ public class AmazonEC2Service {
 	}
 
 	/**
-	 * Check the instance status and order to start it if it's stopped
+	 * Check the instance status and order to start it if it's stopped.
 	 * 
 	 * @param instanceId Instance du start
 	 */
@@ -92,7 +92,7 @@ public class AmazonEC2Service {
 	}
 
 	/**
-	 * Check the instance status and order to stop it if it's running
+	 * Check the instance status and order to stop it if it's running.
 	 * 
 	 * @param instanceId instance to stop
 	 */
@@ -126,7 +126,7 @@ public class AmazonEC2Service {
 	}
 
 	/**
-	 * Method to return a current instance status
+	 * Method to return a current instance status.
 	 * 
 	 * @param instanceId id of the instance
 	 * @return instance status
