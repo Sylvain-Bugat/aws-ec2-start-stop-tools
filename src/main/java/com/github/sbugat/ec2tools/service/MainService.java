@@ -11,23 +11,39 @@ import com.github.sbugat.ec2tools.service.configuration.ConfigurationService;
 import com.github.sbugat.ec2tools.service.options.ProgramOptions;
 import com.github.sbugat.ec2tools.service.options.ProgramOptionsService;
 
+/**
+ * Main service which include the called main method.
+ * 
+ * @author Sylvain Bugat
+ * 
+ */
 public class MainService {
 
 	/** SLF4J XLogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(MainService.class);
 
+	/** Amazon EC2 service. */
 	@Inject
 	private AmazonEC2Service amazonEC2Service;
 
+	/** Configuration service. */
 	@Inject
 	private ConfigurationService configurationService;
 
+	/** Options of the program service. */
 	@Inject
 	private ProgramOptionsService programOptionsService;
 
+	/** Process orders to start/stop instances service. */
 	@Inject
 	private StartStopService startStopService;
 
+	/**
+	 * Main method to parse arguments and process orders.
+	 * 
+	 * @param programArgs program arguments
+	 * @throws Exception if the program failed
+	 */
 	public void main(final String[] programArgs) throws Exception {
 
 		LOG.entry((Object[]) programArgs);
