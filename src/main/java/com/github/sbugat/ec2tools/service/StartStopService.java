@@ -14,17 +14,31 @@ import com.github.sbugat.ec2tools.service.aws.AmazonEC2Service;
 import com.github.sbugat.ec2tools.service.configuration.ConfigurationService;
 import com.github.sbugat.ec2tools.service.options.ProgramOptions;
 
-public class StartStopService {
+/**
+ * Service to process orders to check/post-check/start/stop instances.
+ * 
+ * @author Sylvain Bugat
+ * 
+ */
+public final class StartStopService {
 
 	/** SLF4J XLogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(StartStopService.class);
 
+	/** Amazon EC2 service. */
 	@Inject
 	private AmazonEC2Service amazonEC2Service;
 
+	/** Configuration service. */
 	@Inject
 	private ConfigurationService configurationService;
 
+	/**
+	 * Process all program option sections.
+	 * 
+	 * @param programOptions options of the program
+	 * @return false if all sections has been processed with success, true otherwise
+	 */
 	public boolean processAllSections(final ProgramOptions programOptions) {
 
 		LOG.entry(programOptions);
@@ -40,6 +54,13 @@ public class StartStopService {
 		return error;
 	}
 
+	/**
+	 * Process all orders of a section, actions done depends of program options.
+	 * 
+	 * @param programOptions options of the program
+	 * @param section section to process
+	 * @return false if the section has been processed with success, true otherwise
+	 */
 	private boolean processSection(final ProgramOptions programOptions, final String section) {
 
 		LOG.entry(programOptions, section);
@@ -75,10 +96,10 @@ public class StartStopService {
 	}
 
 	/**
-	 * Process an order to start or stop an Amazon EC2 instance
+	 * Process an order to start or stop an Amazon EC2 instance.
 	 * 
 	 * @param instanceOrder order to process
-	 * @return false is the order has been processed with success, true otherwise
+	 * @return false if the order has been processed with success, true otherwise
 	 */
 	private boolean processOrder(final InstanceOrder instanceOrder) {
 
@@ -115,10 +136,10 @@ public class StartStopService {
 	}
 
 	/**
-	 * Process an order to start or stop an Amazon EC2 instance
+	 * Process an order to start or stop an Amazon EC2 instance.
 	 * 
 	 * @param instanceOrder order to process
-	 * @return true is the order has been processed with success, false otherwise
+	 * @return true if the order has been processed with success, false otherwise
 	 */
 	private boolean checkInstance(final InstanceOrder instanceOrder) {
 
@@ -171,10 +192,10 @@ public class StartStopService {
 	}
 
 	/**
-	 * Process an order to start or stop an Amazon EC2 instance
+	 * Process an order to start or stop an Amazon EC2 instance.
 	 * 
 	 * @param instanceOrder order to process
-	 * @return true is the order has been processed with success, false otherwise
+	 * @return true if the order has been processed with success, false otherwise
 	 */
 	private boolean postCheckInstance(final InstanceOrder instanceOrder) {
 

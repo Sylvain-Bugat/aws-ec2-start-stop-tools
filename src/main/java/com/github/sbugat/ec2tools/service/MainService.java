@@ -17,7 +17,7 @@ import com.github.sbugat.ec2tools.service.options.ProgramOptionsService;
  * @author Sylvain Bugat
  * 
  */
-public class MainService {
+public final class MainService {
 
 	/** SLF4J XLogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(MainService.class);
