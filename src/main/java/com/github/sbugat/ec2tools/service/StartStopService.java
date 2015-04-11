@@ -84,27 +84,27 @@ public class StartStopService {
 
 		LOG.entry(amazonEC2Service, instanceOrder);
 		// Starting instance order
-		if (OrderType.START == instanceOrder.orderType) {
+		if (OrderType.START == instanceOrder.getOrderType()) {
 
 			try {
-				amazonEC2Service.startInstance(instanceOrder.instanceId);
+				amazonEC2Service.startInstance(instanceOrder.getInstanceId());
 			}
 			// Starting error
 			catch (final Exception e) {
-				LOG.error("Error starting instance {}", instanceOrder.instanceId, e);
+				LOG.error("Error starting instance {}", instanceOrder.getInstanceId(), e);
 				LOG.exit(true);
 				return true;
 			}
 		}
 		// Stoping instance order
-		else if (OrderType.STOP == instanceOrder.orderType) {
+		else if (OrderType.STOP == instanceOrder.getOrderType()) {
 
 			try {
-				amazonEC2Service.stopInstance(instanceOrder.instanceId);
+				amazonEC2Service.stopInstance(instanceOrder.getInstanceId());
 			}
 			// Stopping error
 			catch (final Exception e) {
-				LOG.error("Error stopping instance {}", instanceOrder.instanceId, e);
+				LOG.error("Error stopping instance {}", instanceOrder.getInstanceId(), e);
 				LOG.exit(true);
 				return true;
 			}
@@ -124,43 +124,43 @@ public class StartStopService {
 
 		LOG.entry(amazonEC2Service, instanceOrder);
 		// Starting instance order
-		if (OrderType.START == instanceOrder.orderType) {
+		if (OrderType.START == instanceOrder.getOrderType()) {
 
 			try {
-				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.getInstanceId());
 				if (InstanceStateName.Stopped == status) {
-					LOG.info("Instance {} is stopped and can be started", instanceOrder.instanceId);
+					LOG.info("Instance {} is stopped and can be started", instanceOrder.getInstanceId());
 				}
 				else {
-					LOG.error("Instance {} is not stopped and cannot be started", instanceOrder.instanceId, status);
+					LOG.error("Instance {} is not stopped and cannot be started", instanceOrder.getInstanceId(), status);
 					LOG.exit(true);
 					return true;
 				}
 			}
 			// Starting error
 			catch (final Exception e) {
-				LOG.error("Error checking status of instance {}", instanceOrder.instanceId, e);
+				LOG.error("Error checking status of instance {}", instanceOrder.getInstanceId(), e);
 				LOG.exit(true);
 				return true;
 			}
 		}
 		// Stoping instance order
-		else if (OrderType.STOP == instanceOrder.orderType) {
+		else if (OrderType.STOP == instanceOrder.getOrderType()) {
 
 			try {
-				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.getInstanceId());
 				if (InstanceStateName.Running == status) {
-					LOG.info("Instance {} is running and can be stopped", instanceOrder.instanceId);
+					LOG.info("Instance {} is running and can be stopped", instanceOrder.getInstanceId());
 				}
 				else {
-					LOG.error("Instance {} is not running and cannot be stopped", instanceOrder.instanceId, status);
+					LOG.error("Instance {} is not running and cannot be stopped", instanceOrder.getInstanceId(), status);
 					LOG.exit(true);
 					return true;
 				}
 			}
 			// Stoping error
 			catch (final Exception e) {
-				LOG.error("Error stoping instance {}", instanceOrder.instanceId, e);
+				LOG.error("Error stoping instance {}", instanceOrder.getInstanceId(), e);
 				LOG.exit(true);
 				return true;
 			}
@@ -180,43 +180,43 @@ public class StartStopService {
 
 		LOG.entry(amazonEC2Service, instanceOrder);
 		// Starting instance order
-		if (OrderType.START == instanceOrder.orderType) {
+		if (OrderType.START == instanceOrder.getOrderType()) {
 
 			try {
-				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.getInstanceId());
 				if (InstanceStateName.Running == status) {
-					LOG.info("Instance {} is running", instanceOrder.instanceId);
+					LOG.info("Instance {} is running", instanceOrder.getInstanceId());
 				}
 				else {
-					LOG.error("Instance {} is not running", instanceOrder.instanceId, status);
+					LOG.error("Instance {} is not running", instanceOrder.getInstanceId(), status);
 					LOG.exit(true);
 					return true;
 				}
 			}
 			// Starting error
 			catch (final Exception e) {
-				LOG.error("Error checking status of instance {}", instanceOrder.instanceId, e);
+				LOG.error("Error checking status of instance {}", instanceOrder.getInstanceId(), e);
 				LOG.exit(true);
 				return true;
 			}
 		}
 		// Stoping instance order
-		else if (OrderType.STOP == instanceOrder.orderType) {
+		else if (OrderType.STOP == instanceOrder.getOrderType()) {
 
 			try {
-				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.instanceId);
+				final InstanceStateName status = amazonEC2Service.getInstanceStatus(instanceOrder.getInstanceId());
 				if (InstanceStateName.Stopped == status) {
-					LOG.info("Instance {} is stopped", instanceOrder.instanceId);
+					LOG.info("Instance {} is stopped", instanceOrder.getInstanceId());
 				}
 				else {
-					LOG.error("Instance {} is not stopped", instanceOrder.instanceId, status);
+					LOG.error("Instance {} is not stopped", instanceOrder.getInstanceId(), status);
 					LOG.exit(true);
 					return true;
 				}
 			}
 			// Stoping error
 			catch (final Exception e) {
-				LOG.error("Error stoping instance {}", instanceOrder.instanceId, e);
+				LOG.error("Error stoping instance {}", instanceOrder.getInstanceId(), e);
 				LOG.exit(true);
 				return true;
 			}

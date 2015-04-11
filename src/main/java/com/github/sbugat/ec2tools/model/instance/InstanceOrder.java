@@ -8,10 +8,10 @@ package com.github.sbugat.ec2tools.model.instance;
 public final class InstanceOrder {
 
 	/** Instande identifier of the order. */
-	public final String instanceId;
+	private final String instanceId;
 
 	/** Type of the order. */
-	public final OrderType orderType;
+	private final OrderType orderType;
 
 	/**
 	 * Copy arguments constructor.
@@ -23,6 +23,24 @@ public final class InstanceOrder {
 
 		instanceId = instanceIdArg;
 		orderType = OrderType.valueOf(orderTypeArg);
+	}
+
+	/**
+	 * Return the instance identifier.
+	 * 
+	 * @return instance identifier
+	 */
+	public String getInstanceId() {
+		return instanceId;
+	}
+
+	/**
+	 * return the order type.
+	 * 
+	 * @return order type
+	 */
+	public OrderType getOrderType() {
+		return orderType;
 	}
 
 	@Override
