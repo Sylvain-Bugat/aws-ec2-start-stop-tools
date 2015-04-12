@@ -10,19 +10,37 @@ import org.slf4j.ext.XLoggerFactory;
 
 import com.github.sbugat.ec2tools.EC2StartStopMain;
 
+/**
+ * Service to load program arguments as valid options.
+ * 
+ * @author Sylvain Bugat
+ * 
+ */
 public class ProgramOptionsService {
 
 	/*** SLF4J XLogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(ProgramOptionsService.class);
 
+	/** Main usage line. */
 	private static final String USAGE = "Usage: [-l] [-e|-c|-p -s <section1> -s <section2> ... ]";
+	/** List option usage. */
 	private static final String USAGE_LIST = "[-l]: list configuration ";
+	/** Execute option usage. */
 	private static final String USAGE_EXECUTE = "[-e]: execute sections orders";
+	/** Check option usage. */
 	private static final String USAGE_CHECK = "[-c]: check if sections orders can be done";
+	/** Post-check option usage. */
 	private static final String USAGE_POST_CHECK = "[-p]: check if sections orders has been done";
+	/** Sections option usage. */
 	private static final String USAGE_SECTIONS = "[-s <section1> -s <section2> ... ]: sections to process";
 
-	public ProgramOptions processProgramArgs(final String programArgs[]) {
+	/**
+	 * Process all program arguments.
+	 * 
+	 * @param programArgs program arguments
+	 * @return loaded program options
+	 */
+	public ProgramOptions processProgramArgs(final String[] programArgs) {
 
 		// Arguments checking
 		final Getopt getOpt = new Getopt(EC2StartStopMain.class.getSimpleName(), programArgs, ":lecps:");
@@ -113,7 +131,7 @@ public class ProgramOptionsService {
 	}
 
 	/**
-	 * Return the usage multi-line String to display
+	 * Return the usage multi-line String to display.
 	 * 
 	 * @return usage multi-line String
 	 */
