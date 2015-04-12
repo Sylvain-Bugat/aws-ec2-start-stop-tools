@@ -1,7 +1,10 @@
 package com.github.sbugat.ec2tools.model.instance;
 
-import org.assertj.core.api.Assertions;
+import nl.jqno.equalsverifier.EqualsVerifier;
+
 import org.junit.Test;
+
+import com.github.sbugat.ec2tools.service.options.ProgramOptions;
 
 /**
  * Main launcher test.
@@ -10,42 +13,9 @@ import org.junit.Test;
  */
 public class InstanceOrderTest {
 
-	private static final String INSTANCE_ID_1 = "instance 1";
-	private static final String INSTANCE_ID_2 = "instance 2";
-
 	@Test
-	public void testInstanceOrderEqualsSameObject() throws Exception {
-		final InstanceOrder instanceOrder = new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString());
-		Assertions.assertThat(instanceOrder).isEqualTo(instanceOrder);
-	}
+	public void testEqualsAndHashCode() {
 
-	@Test
-	public void testInstanceOrderEquals() throws Exception {
-		final InstanceOrder instanceOrder = new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString());
-		Assertions.assertThat(instanceOrder).isEqualTo(new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString()));
-	}
-
-	@Test
-	public void testInstanceOrderEqualsNull() throws Exception {
-		final InstanceOrder instanceOrder = new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString());
-		Assertions.assertThat(instanceOrder).isNotEqualTo(null);
-	}
-
-	@Test
-	public void testInstanceOrderEqualsDifferentType() throws Exception {
-		final InstanceOrder instanceOrder = new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString());
-		Assertions.assertThat(instanceOrder).isNotEqualTo(INSTANCE_ID_1);
-	}
-
-	@Test
-	public void testInstanceOrderEqualsDifferentInstance() throws Exception {
-		final InstanceOrder instanceOrder = new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString());
-		Assertions.assertThat(instanceOrder).isNotEqualTo(new InstanceOrder(INSTANCE_ID_2, OrderType.START.toString()));
-	}
-
-	@Test
-	public void testInstanceOrderEqualsDifferentOrdertype() throws Exception {
-		final InstanceOrder instanceOrder = new InstanceOrder(INSTANCE_ID_1, OrderType.START.toString());
-		Assertions.assertThat(instanceOrder).isNotEqualTo(new InstanceOrder(INSTANCE_ID_1, OrderType.STOP.toString()));
+		EqualsVerifier.forClass(ProgramOptions.class).verify();
 	}
 }
