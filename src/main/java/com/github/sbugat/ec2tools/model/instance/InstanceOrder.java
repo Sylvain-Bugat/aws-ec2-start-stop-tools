@@ -49,6 +49,15 @@ public final class InstanceOrder {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (instanceId == null ? 0 : instanceId.hashCode());
+		result = prime * result + (orderType == null ? 0 : orderType.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(final Object object) {
 
 		if (this == object) {

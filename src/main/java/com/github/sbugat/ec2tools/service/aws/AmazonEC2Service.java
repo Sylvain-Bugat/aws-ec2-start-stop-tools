@@ -26,7 +26,7 @@ import com.amazonaws.services.ec2.model.StopInstancesResult;
  * 
  * @author Sylvain Bugat
  */
-public final class AmazonEC2Service {
+public class AmazonEC2Service {
 
 	/*** SLF4J XLogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(AmazonEC2Service.class);
@@ -37,10 +37,8 @@ public final class AmazonEC2Service {
 
 	/**
 	 * Amazon EC2 service initialization.
-	 * 
-	 * @throws AmazonClientException initialization exception
 	 */
-	public void initialize() throws AmazonClientException {
+	public void initialize() {
 
 		LOG.entry();
 		LOG.info("Initialize ECS AWS client");

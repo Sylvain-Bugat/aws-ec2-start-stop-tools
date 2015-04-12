@@ -24,7 +24,7 @@ import com.google.common.collect.ImmutableList;
  * @author Sylvain Bugat
  * 
  */
-public final class ConfigurationService {
+public class ConfigurationService {
 
 	/** SLF4J Xlogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(ConfigurationService.class);

@@ -20,7 +20,7 @@ import com.github.sbugat.ec2tools.service.options.ProgramOptions;
  * @author Sylvain Bugat
  * 
  */
-public final class StartStopService {
+public class StartStopService {
 
 	/** SLF4J XLogger. */
 	private static final XLogger LOG = XLoggerFactory.getXLogger(StartStopService.class);

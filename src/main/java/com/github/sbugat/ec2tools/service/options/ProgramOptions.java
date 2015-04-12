@@ -100,19 +100,36 @@ public final class ProgramOptions {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (checkOption ? 1231 : 1237);
+		result = prime * result + (executionOption ? 1231 : 1237);
+		result = prime * result + (listOption ? 1231 : 1237);
+		result = prime * result + (postCheckOption ? 1231 : 1237);
+		result = prime * result + (sectionOptions == null ? 0 : sectionOptions.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(final Object object) {
 
 		if (this == object) {
 			return true;
 		}
-
-		if (object == null || !ProgramOptions.class.isInstance(object)) {
+		else if (object == null || !ProgramOptions.class.isInstance(object)) {
 			return false;
 		}
 
 		final ProgramOptions programOptions = (ProgramOptions) object;
 
 		if (executionOption != programOptions.executionOption || listOption != programOptions.listOption || checkOption != programOptions.checkOption || postCheckOption != programOptions.postCheckOption) {
+			return false;
+		}
+		else if (null == sectionOptions && null == programOptions.sectionOptions) {
+			return true;
+		}
+		else if (null == sectionOptions || null == programOptions.sectionOptions) {
 			return false;
 		}
 
