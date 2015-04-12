@@ -12,6 +12,9 @@ import com.google.common.collect.ImmutableList;
  */
 public final class ProgramOptions {
 
+	private static final int PRIME_TRUE = 1231;
+	private static final int PRIME_FALSE = 1237;
+
 	/** Execution flag option. */
 	private final boolean executionOption;
 
@@ -102,12 +105,43 @@ public final class ProgramOptions {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + (checkOption ? 1231 : 1237);
-		result = prime * result + (executionOption ? 1231 : 1237);
-		result = prime * result + (listOption ? 1231 : 1237);
-		result = prime * result + (postCheckOption ? 1231 : 1237);
-		result = prime * result + (sectionOptions == null ? 0 : sectionOptions.hashCode());
+		int result = prime;
+		if (checkOption) {
+			result += PRIME_TRUE;
+		}
+		else {
+			result += PRIME_FALSE;
+		}
+
+		result *= prime;
+		if (executionOption) {
+			result += PRIME_TRUE;
+		}
+		else {
+			result += PRIME_FALSE;
+		}
+
+		result *= prime;
+		if (listOption) {
+			result += PRIME_TRUE;
+		}
+		else {
+			result += PRIME_FALSE;
+		}
+
+		result *= prime;
+		if (postCheckOption) {
+			result += PRIME_TRUE;
+		}
+		else {
+			result += PRIME_FALSE;
+		}
+
+		result *= prime;
+		if (null != sectionOptions) {
+			result += sectionOptions.hashCode();
+		}
+
 		return result;
 	}
 
