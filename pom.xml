@@ -83,6 +83,7 @@
 		<mockito.version>1.10.19</mockito.version>
 		<assertj.version>2.0.0</assertj.version>
 		<powermock.version>1.6.2</powermock.version>
+		<equalsverifier.version>1.7.2</equalsverifier.version>
 
 		<!-- Maven Lifecycle Plugins Version -->
 		<maven.pluginclean.version>2.6.1</maven.pluginclean.version>
@@ -219,6 +220,12 @@
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-mockito</artifactId>
 			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>nl.jqno.equalsverifier</groupId>
+			<artifactId>equalsverifier</artifactId>
+			<version>${equalsverifier.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
