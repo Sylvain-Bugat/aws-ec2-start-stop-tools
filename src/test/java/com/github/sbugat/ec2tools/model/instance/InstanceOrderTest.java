@@ -4,8 +4,6 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import com.github.sbugat.ec2tools.service.options.ProgramOptions;
-
 /**
  * Main launcher test.
  * 
@@ -16,6 +14,6 @@ public class InstanceOrderTest {
 	@Test
 	public void testEqualsAndHashCode() {
 
-		EqualsVerifier.forClass(ProgramOptions.class).verify();
+		EqualsVerifier.forClass(InstanceOrder.class).verify();
 	}
 }

@@ -12,7 +12,9 @@ import com.google.common.collect.ImmutableList;
  */
 public final class ProgramOptions {
 
+	/** Prime number for calculating true boolean hashcode. */
 	private static final int PRIME_TRUE = 1231;
+	/** Prime number for calculating false boolean hashcode. */
 	private static final int PRIME_FALSE = 1237;
 
 	/** Execution flag option. */
