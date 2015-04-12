@@ -28,7 +28,7 @@ public final class EC2StartStopMain {
 	 * Starting method of the of start-stop EC2 tools.
 	 * 
 	 * @param args program arguments
-	 * @throws Exception thrown when the program exit with an error
+	 * @throws Exception thrown when the program exit with an error (java exit != 0)
 	 */
 	public static void main(final String[] args) throws Exception {
 
