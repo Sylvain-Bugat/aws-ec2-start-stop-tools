@@ -26,7 +26,7 @@ java -jar start-stop-ec2-tools-1.0-SNAPSHOT-jar-with-dependencies.jar -e -s SECT
 
 ## Compile and build
 
-Using maven 3.0.0 or more recent, type this command:
+Using maven 3.0.1 or more recent, type this command:
 ```bash
 mvn clean install
 ```
