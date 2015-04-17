@@ -348,7 +348,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- Enforcer plugin configuration -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -372,6 +372,17 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<!-- Versions plugin configucation -->
+			<!-- Dependencies check with this command: mvn -U versions:display-plugin-updates  versions:display-property-updates -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${maven.pluginversions.version}</version>
+				<configuration>
+					<rulesUri>file:./dependencies-check-rules.xml</rulesUri>
+				</configuration>
 			</plugin>
 
 			<!-- Tests coverage plugin configuration -->
