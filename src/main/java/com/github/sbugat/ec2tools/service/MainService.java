@@ -1,6 +1,7 @@
 package com.github.sbugat.ec2tools.service;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.slf4j.ext.XLogger;
@@ -17,6 +18,7 @@ import com.github.sbugat.ec2tools.service.options.ProgramOptionsService;
  * @author Sylvain Bugat
  * 
  */
+@Singleton
 public final class MainService {
 
 	/** SLF4J XLogger. */

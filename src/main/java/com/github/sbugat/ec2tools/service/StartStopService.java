@@ -3,6 +3,7 @@ package com.github.sbugat.ec2tools.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
@@ -20,6 +21,7 @@ import com.github.sbugat.ec2tools.service.options.ProgramOptions;
  * @author Sylvain Bugat
  * 
  */
+@Singleton
 public class StartStopService {
 
 	/** SLF4J XLogger. */

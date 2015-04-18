@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
@@ -24,6 +25,7 @@ import com.google.common.collect.ImmutableList;
  * @author Sylvain Bugat
  * 
  */
+@Singleton
 public class ConfigurationService {
 
 	/** SLF4J Xlogger. */

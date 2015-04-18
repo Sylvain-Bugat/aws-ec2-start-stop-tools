@@ -3,6 +3,7 @@ package com.github.sbugat.ec2tools.service.aws;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
@@ -26,6 +27,7 @@ import com.amazonaws.services.ec2.model.StopInstancesResult;
  * 
  * @author Sylvain Bugat
  */
+@Singleton
 public class AmazonEC2Service {
 
 	/*** SLF4J XLogger. */

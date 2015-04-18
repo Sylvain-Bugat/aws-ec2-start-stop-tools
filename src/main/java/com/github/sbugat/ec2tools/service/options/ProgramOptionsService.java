@@ -5,6 +5,8 @@ import gnu.getopt.Getopt;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
@@ -16,6 +18,7 @@ import com.github.sbugat.ec2tools.EC2StartStopMain;
  * @author Sylvain Bugat
  * 
  */
+@Singleton
 public class ProgramOptionsService {
 
 	/*** SLF4J XLogger. */
