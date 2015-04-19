@@ -55,7 +55,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Maven version -->
-		<maven.version>3.0.1</maven.version>
+		<maven.version>3.0.5</maven.version>
 
 		<!-- JDK/JRE Version -->
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -453,11 +453,6 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<version>${maven.pluginassembly.version}</version>
-				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
