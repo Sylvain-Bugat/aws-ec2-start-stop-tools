@@ -70,7 +70,7 @@
 
 		<!-- Dependencies injection versions -->
 		<javax.inject.version>1</javax.inject.version>
-		<google.guice.version>3.0</google.guice.version>
+		<google.guice.version>4.0</google.guice.version>
 
 		<!-- GitHub Client -->
 		<github.client>3.6.0.201411121045-m1</github.client>
