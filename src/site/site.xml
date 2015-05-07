@@ -44,6 +44,7 @@
 	<poweredBy>
 		<logo name="Maven" href="http://maven.apache.org/" img="images/logos/maven-feather.png"/>
 		<logo name="GitHub" href="https://github.com/" img="images/logos/GitHub.png"/>
+		<logo name="Amazon Web Services" href="http://aws.amazon.com/" img="images/logos/aws.png"/>
 	</poweredBy>
 	<body>
 		<breadcrumbs>
