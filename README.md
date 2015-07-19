@@ -1,7 +1,9 @@
 # aws-ec2-start-stop-tools
 
 [![License](https://img.shields.io/github/license/Sylvain-Bugat/aws-ec2-start-stop-tools.svg)](https://github.com/Sylvain-Bugat/aws-ec2-start-stop-tools/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/Sylvain-Bugat/aws-ec2-start-stop-tools.svg?branch=master)](https://travis-ci.org/Sylvain-Bugat/aws-ec2-start-stop-tools) [![Coverage Status](https://coveralls.io/repos/Sylvain-Bugat/aws-ec2-start-stop-tools/badge.svg?branch=master)](https://coveralls.io/r/Sylvain-Bugat/aws-ec2-start-stop-tools?branch=master)
+[![Build Status](https://travis-ci.org/Sylvain-Bugat/aws-ec2-start-stop-tools.svg?branch=master)](https://travis-ci.org/Sylvain-Bugat/aws-ec2-start-stop-tools)
+[![Coverage Status](https://coveralls.io/repos/Sylvain-Bugat/aws-ec2-start-stop-tools/badge.svg?branch=master)](https://coveralls.io/r/Sylvain-Bugat/aws-ec2-start-stop-tools?branch=master)
+
 ========================
 Simple but useful tools to start and stop Amazon AWS EC2 instances.
 
