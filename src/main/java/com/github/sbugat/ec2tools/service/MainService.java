@@ -11,6 +11,7 @@ import com.github.sbugat.ec2tools.service.aws.AmazonEC2Service;
 import com.github.sbugat.ec2tools.service.configuration.ConfigurationService;
 import com.github.sbugat.ec2tools.service.options.ProgramOptions;
 import com.github.sbugat.ec2tools.service.options.ProgramOptionsService;
+import com.github.sbugat.ec2tools.service.update.UpdateService;
 
 /**
  * Main service which include the called main method.
@@ -40,6 +41,9 @@ public final class MainService {
 	@Inject
 	private StartStopService startStopService;
 
+	@Inject
+	private UpdateService updateService;
+
 	/**
 	 * Main method to parse arguments and process orders.
 	 * 
@@ -49,6 +53,9 @@ public final class MainService {
 	public void main(final String[] programArgs) throws Exception {
 
 		LOG.entry((Object[]) programArgs);
+
+		// updateService.run();
+		// System.exit(1);
 
 		// Arguments checking
 		final ProgramOptions programOptions;
