@@ -124,6 +124,7 @@
 		<maven.pluginreports.version>2.8</maven.pluginreports.version>
 		<maven.plugintaglist.version>2.4</maven.plugintaglist.version>
 		<maven.pluginchanges.version>2.11</maven.pluginchanges.version>
+		<maven.pluginchangelog.version>2.3</maven.pluginchangelog.version>
 		<maven.pluginsurefire.version>2.18.1</maven.pluginsurefire.version>
 		<maven.pluginjavadoc.version>2.10.3</maven.pluginjavadoc.version>
 		<maven.pluginjxr.version>2.5</maven.pluginjxr.version>
@@ -516,6 +517,14 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
+
+			<!-- Changelog report -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>${maven.pluginchangelog.version}</version>
+			</plugin>
+
 			<!-- Inline sources report -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
