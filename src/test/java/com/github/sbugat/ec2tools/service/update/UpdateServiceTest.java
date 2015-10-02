@@ -2,6 +2,7 @@ package com.github.sbugat.ec2tools.service.update;
 
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -26,6 +27,7 @@ public class UpdateServiceTest extends GenericMockitoTest {
 
 	}
 
+	@Ignore
 	@Test
 	public void test() throws Exception {
 
