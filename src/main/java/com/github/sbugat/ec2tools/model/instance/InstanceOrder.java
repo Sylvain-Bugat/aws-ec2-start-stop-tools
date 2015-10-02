@@ -2,7 +2,7 @@ package com.github.sbugat.ec2tools.model.instance;
 
 /**
  * Loaded instance order.
- * 
+ *
  * @author Sylvain Bugat
  */
 public final class InstanceOrder {
@@ -15,7 +15,7 @@ public final class InstanceOrder {
 
 	/**
 	 * Copy arguments constructor.
-	 * 
+	 *
 	 * @param instanceIdArg instance identifier to copy
 	 * @param orderTypeArg order type to copy
 	 */
@@ -27,7 +27,7 @@ public final class InstanceOrder {
 
 	/**
 	 * Return the instance identifier.
-	 * 
+	 *
 	 * @return instance identifier
 	 */
 	public String getInstanceId() {
@@ -36,7 +36,7 @@ public final class InstanceOrder {
 
 	/**
 	 * return the order type.
-	 * 
+	 *
 	 * @return order type
 	 */
 	public OrderType getOrderType() {
@@ -78,10 +78,14 @@ public final class InstanceOrder {
 
 		final InstanceOrder instanceOrder = (InstanceOrder) object;
 
-		if (instanceId != null && !instanceId.equals(instanceOrder.instanceId) || orderType != instanceOrder.orderType) {
-			return false;
-		}
+		if (null == instanceId) {
+			if (null != instanceOrder.instanceId) {
+				return false;
+			}
 
-		return true;
+			return orderType == instanceOrder.orderType;
+		} else {
+			return instanceId.equals(instanceOrder.instanceId) && orderType == instanceOrder.orderType;
+		}
 	}
 }
