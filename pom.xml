@@ -57,9 +57,14 @@
 		<!-- Maven version -->
 		<maven.version>3.0.5</maven.version>
 
-		<!-- JDK/JRE Version -->
+		<!-- Java version and compiler options-->
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.fork>true</maven.compiler.fork>
+		<maven.compiler.compilerVersion>${maven.compiler.source}</maven.compiler.compilerVersion>
+		<maven.compiler.optimize>true</maven.compiler.optimize>
+		<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+		<maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 
 		<!-- Log Frameworks Version -->
 		<slf4j.version>1.7.12</slf4j.version>
@@ -265,9 +270,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.plugincompiler.version}</version>
 				<configuration>
-					<compilerVersion>${maven.compiler.source}</compilerVersion>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
 					<compilerArgs>
 						<arg>-Xlint</arg>
 					</compilerArgs>
