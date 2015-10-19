@@ -104,7 +104,7 @@
 		<maven.plugininstall.version>2.5.2</maven.plugininstall.version>
 		<maven.pluginsite.version>3.4</maven.pluginsite.version>
 		<maven.plugincompiler.version>3.3</maven.plugincompiler.version>
-		<maven.pluginsurefire.version>2.18.1</maven.pluginsurefire.version>
+		<maven.pluginsurefire.version>2.19</maven.pluginsurefire.version>
 		<maven.pluginfailsafe.version>2.18.1</maven.pluginfailsafe.version>
 		<maven.pluginversions.version>2.2</maven.pluginversions.version>
 		<maven.pluginjar.version>2.6</maven.pluginjar.version>
@@ -130,7 +130,7 @@
 		<maven.plugintaglist.version>2.4</maven.plugintaglist.version>
 		<maven.pluginchanges.version>2.11</maven.pluginchanges.version>
 		<maven.pluginchangelog.version>2.3</maven.pluginchangelog.version>
-		<maven.pluginsurefire.version>2.18.1</maven.pluginsurefire.version>
+		<maven.pluginsurefire.version>2.19</maven.pluginsurefire.version>
 		<maven.pluginjavadoc.version>2.10.3</maven.pluginjavadoc.version>
 		<maven.pluginjxr.version>2.5</maven.pluginjxr.version>
 		<maven.pluginlinkcheck.version>1.2</maven.pluginlinkcheck.version>
