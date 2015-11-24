@@ -81,7 +81,7 @@
 		<github.client>3.6.0.201411121045-m1</github.client>
 
 		<!-- Google GSON (used/required by GitHub Client)-->
-		<gson.client>2.4</gson.client>
+		<gson.client>2.5</gson.client>
 
 		<!-- Java GNU port of getopt-->
 		<gnu.getopt.version>1.0.13</gnu.getopt.version>
