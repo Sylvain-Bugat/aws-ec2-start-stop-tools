@@ -90,7 +90,7 @@
 		<commons.configuration.version>1.10</commons.configuration.version>
 
 		<!-- Google Guava -->
-		<guava.version>18.0</guava.version>
+		<guava.version>19.0</guava.version>
 
 		<!-- Tests -->
 		<junit.version>4.12</junit.version>
