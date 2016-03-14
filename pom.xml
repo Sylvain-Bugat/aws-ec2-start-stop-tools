@@ -97,7 +97,7 @@
 		<mockito.version>1.10.19</mockito.version>
 		<assertj.version>2.3.0</assertj.version>
 		<powermock.version>1.6.4</powermock.version>
-		<equalsverifier.version>2.0</equalsverifier.version>
+		<equalsverifier.version>2.0.1</equalsverifier.version>
 
 		<!-- Maven Lifecycle Plugins Version -->
 		<maven.pluginclean.version>3.0.0</maven.pluginclean.version>
