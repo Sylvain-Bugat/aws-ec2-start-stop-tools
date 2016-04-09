@@ -78,7 +78,7 @@
 		<google.guice.version>4.0</google.guice.version>
 
 		<!-- GitHub Client -->
-		<github.client>4.2.0.201601211800-r</github.client>
+		<github.client>4.3.0.201604071810-r</github.client>
 
 		<!-- Google GSON (used/required by GitHub Client)-->
 		<gson.client>2.6.2</gson.client>
