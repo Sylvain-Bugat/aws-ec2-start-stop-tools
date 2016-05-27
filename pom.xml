@@ -71,7 +71,7 @@
 		<logback.version>1.1.7</logback.version>
 
 		<!-- AWS version -->
-		<amazon.aws.version>1.11.3</amazon.aws.version>
+		<amazon.aws.version>1.11.4</amazon.aws.version>
 
 		<!-- Dependencies injection versions -->
 		<javax.inject.version>1</javax.inject.version>
