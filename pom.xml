@@ -131,7 +131,7 @@
 		<maven.pluginchanges.version>2.12</maven.pluginchanges.version>
 		<maven.pluginchangelog.version>2.3</maven.pluginchangelog.version>
 		<maven.pluginsurefire.version>2.19.1</maven.pluginsurefire.version>
-		<maven.pluginjavadoc.version>2.10.3</maven.pluginjavadoc.version>
+		<maven.pluginjavadoc.version>2.10.4</maven.pluginjavadoc.version>
 		<maven.pluginjxr.version>2.5</maven.pluginjxr.version>
 		<maven.pluginlinkcheck.version>1.2</maven.pluginlinkcheck.version>
 	</properties>
